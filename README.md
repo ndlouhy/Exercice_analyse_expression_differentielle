@@ -47,9 +47,9 @@ Pour réaliser une analyse d'expression différentille nous avons besion de deux
 
 Avec notre jeu de données, nous allons pouvoir créer en plus un fichier qui va contenir toutes les informations de description des gènes.
 
-'''
+```
 test code R
-'''
+```
 
 
 ## Résultats
