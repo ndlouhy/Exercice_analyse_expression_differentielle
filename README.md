@@ -15,11 +15,11 @@ L'objectif de l’analyse est double. Dans un premier temps, il faut déterminer
 
 ### Import du jeu de données
 Dans un premier temps, il faut importer le jeu de données.
-<pre> 
+```
 file_path <- "data/gene_count.xls"
 
 data_file <- read.table(file_path, header = T, sep = "\t")
-</pre>
+```
 
 Description :
 Le jeu de données présente 35 colonnes pour 33 808 lignes.
@@ -42,13 +42,49 @@ Col 36 : tf_family : Catégorie de famille de facteurs de transcription du gène
 
 Pour réaliser une analyse d'expression différentille nous avons besion de deux fichiers : 
 
-- Un fichier de comptages, qui contient le nombre de lecture de chaque gène pour tous les échantillons.\
+- Un fichier de comptages, qui contient les compatges bruts des gènes pour chaque échantillons.\
 - Un fichier de métadonnées, qui contient toutes les données associées à l'expérience qui sont nécessaires à son interprétation
 
 Avec notre jeu de données, nous allons pouvoir créer en plus un fichier qui va contenir toutes les informations de description des gènes.
 
 ```
-test code R
+### -----------------------
+### File formatage
+### -----------------------
+
+# Définir les noms de lignes du tableau de données
+# Ici, chaque ligne correspond à un gène identifié par "gene_id"
+rownames(data_file) <- data_file$gene_id  
+
+# Supprimer la colonne gene_id maintenant qu'elle est en rownames
+data_file <- data_file[,-1]  
+
+
+### -----------------------
+### Files creation
+### -----------------------
+# Création de la matrice de ReadCounts
+# On sélectionne toutes les colonnes dont le nom commence par "Sample_"
+ReadCount <- data_file[, grep("^Sample_", colnames(data_file))]
+
+
+# Création de la table metadata
+# Chaque échantillon est associé à un groupe biologique
+# Group1 = Sample_1 à Sample_8, Group2 = Sample_9 à Sample_17, Group3 = Sample_18 à Sample_26
+meta <- data.frame(
+  sample = colnames(ReadCount),      # noms des échantillons
+  group = c(
+    rep("Group1", 8),                # 8 échantillons pour le Groupe 1
+    rep("Group2", 9),                # 9 échantillons pour le Groupe 2
+    rep("Group3", 9)                 # 9 échantillons pour le Groupe 3
+  )
+)
+
+
+# Création du fichier de description des gènes
+# On prend toutes les colonnes qui ne sont pas des échantillons.
+genes_description <- data_file[, !grepl("^Sample_", colnames(data_file))]
+
 ```
 
 
