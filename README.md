@@ -13,6 +13,31 @@ L'objectif de l’analyse est double. Dans un premier temps, il faut déterminer
 
 ## Analyse
 
+### Import du jeu de données
+Dans un premier temps, il faut importer le jeu de données.
+<pre> 
+file_path <- "data/gene_count.xls"
+
+data_file <- read.table(file_path, header = T, sep = "\t")
+</pre>
+
+Description :
+Le jeu de données présente 35 colonnes pour 33 808 lignes.
+Il est présenté ainsi :
+Col 1 : gene_id : identifiant Ensembl du gène.
+Col 2-27 : Sample_1-26 : Colonnes de comptages de lectures pour chaque échantillons.
+Col 28 : gene_name : Nom du gène
+Col 29 : gene_chr : Chromosome ou se trouve le gène.
+Col 30 : gene_start : Position de départ du gène.
+Col 31 : gene_end : Position de fin du gène.
+Col 32 : gene_strand : Brin du chromosome ou si trouve le gène.
+Col 33 : gene_length : Longueur du gène.
+Col 34 : gene_biotype : Catégorie fonctionnelle du gène
+Col 35 : gene_description : Description de la fonction du gène.
+Col 36 : tf_family : Catégorie de famille de facteurs de transcription du gène.
+										
+<img width="3745" height="25" alt="image" src="https://github.com/user-attachments/assets/49272cb1-7e14-4848-b249-bb75fb8253f7" />
+
 ## Résultats
 
 ## Conclusion
