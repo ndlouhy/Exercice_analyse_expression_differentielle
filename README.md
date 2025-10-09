@@ -8,9 +8,8 @@ Groupe 1 : échantillons 1-8
 Groupe 2 : échantillons 9-17
 Groupe 3 : échantillons 18-26
 
-Le but de l’analyse est double. Dans un premier temps il faut déterminer la structure des données et évaluer si elles sont exploitable. Dans un second temps il faut réaliser une analyse d'expression différentielle afin d'identifier les tops gènes les plus différentiellement exprimés entre les conditions.
-
 ## Objectif
+L'objectif de l’analyse est double. Dans un premier temps, il faut déterminer la structure des données et évaluer si elles sont exploitable. Dans un second temps il faut réaliser une analyse d'expression différentielle afin d'identifier les tops gènes les plus différentiellement exprimés entre les conditions.
 
 ## Analyse
 
