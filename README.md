@@ -87,6 +87,44 @@ genes_description <- data_file[, !grepl("^Sample_", colnames(data_file))]
 
 ```
 
+Les tableaux peuvent être retrouvé ici.
+
+### Etapes de filtres des données.
+
+A présent, nous devons filtrer les données. Cette étapes est importante car elle va permettre d'enlever les gènes trop faiblement exprimés. Cela va permettre de réduire le bruit et ainsi réduire la variance pour augmenter notre pouvoir statistique.
+
+En première étape nous allons d'abord enlever les gènes qui sont exprimés dans aucune librairie. Ces gènes sont donc pas utile dans l'analyse.
+
+```
+### -----------------------
+### Data filtering
+### -----------------------
+
+# # Compte le nombre de gènes exprimé dans aucun échantillon
+table(rowSums(ReadCount) == 0)
+
+# Suppression des gènes
+ReadCount <- ReadCount[rowSums(ReadCount) > 0, ]
+
+# Vérification
+table(rowSums(ReadCount) == 0)
+```
+Dans notre cas aucun gène n'est exprimé dans aucune librairie, aucun n'a été supprimé.
+
+Ensuite pour aller plus loin nous allons dans le filtre des gènes non informatif, nous allons utiliser la méthode CPM (Counts Per Million). Cette méthode consiste à diviser le nombre de reads mappant sur la librairie par le nombre total de la librairie multiplié par 1 million. Nous avons définis un seuil arbitraire de 10. Les gènes qui dépasse ce seuil dans au moins deux librairies sont conservés.
+
+```
+# Défiition du seuil à 10 cpm
+cutoff <- cpm(10, mean(colSums(ReadCount)))
+
+# On garde uniquement les gènes qui sont un score cpm au dessus de 10 au moins dans 2 librairies
+keep <- rowSums(cpm(ReadCount)>cutoff[1]) >= 2
+
+# Filtrer du fichier de comptage
+ReadCount <- ReadCount[keep,]
+```
+
+A la fin des ces étapes de filtration, nous passons de 33808 gènes à 22050. 11758 gènes ont été supprimés.
 
 ## Résultats
 
