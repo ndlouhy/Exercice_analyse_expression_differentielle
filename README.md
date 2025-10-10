@@ -141,8 +141,18 @@ ReadCount <- ReadCount[keep,]
 ### Création de l'objet DESeq et normalisations.
 
 #### Création de la matrice de design
-A présent nous pouvons définir l'objet DESeq. Il s'agit de la matrice de design avec par ligne les librairies avec les données bruts filtrées, en colonne les conditions expérimentales et en design les groupes définis.
-C'est à partir de cette patrice que DESeq va pouvoir travailler.
+
+Une fois les données de comptage filtrées, nous pouvons créer l’objet DESeqDataSet, qui servira de base lors de l’analyse avec DESeq2.
+
+Cet objet combine :
+
+- les comptages bruts filtrés (countData),
+
+- les métadonnées expérimentales (colData),
+
+- le modèle de design (design), qui décrit les groupes ou conditions expérimentales à comparer.
+
+Chaque ligne correspond à un gène, et chaque colonne correspond à une librairie.
 
 ```
 DESeq.ds <- DESeqDataSetFromMatrix(countData = ReadCount,
@@ -153,9 +163,9 @@ DESeq.ds <- DESeqDataSetFromMatrix(countData = ReadCount,
 
 #### Normalisation
 
-DESeq va alors réaliser une normalisation des données pour les rendre comparables et analysables.
-Il y a une normalisation inter-échantillon.
-On normalise par la tailles des transcrits ainsi que par la taille des librairies poru que tout soit comparable.
+Les données de comptage brutes ne sont pas directement comparables entre échantillons, car elles dépendent de la profondeur de séquençage (taille de la librairie) et du niveau global d’expression.
+
+DESeq2 corrige ces biais en estimant des facteurs de normalisation (sizeFactors), qui mettent toutes les librairies et gènes sur une même échelle de comparaison.
 
 ```
 DESeq.ds <- estimateSizeFactors(DESeq.ds)
@@ -163,15 +173,18 @@ DESeq.ds@colData$sizeFactor
 
 ```
 
-Ensuite j'ai procédé à une transformation logarithmique.
-C'est pour réduire l'influence des valeurs extrèmes en stabilisant la variance entre les gènes faiblement et fortement exprimés.
+Cette étape de normalisation permet d’obtenir des comptages ajustés entre échantillons, où les différences observées reflètent de véritables variations biologiques et non des biais techniques tels que la profondeur de séquençage ou les effets de batch.
 
+Enfin, une transformation logarithmique régularisée (rlog, pour regularized log transformation) est appliquée.
+Cette transformation a pour objectif de stabiliser la variance entre les gènes faiblement et fortement exprimés, tout en réduisant l’influence des valeurs extrêmes.
+Contrairement à une simple transformation logarithmique, rlog() ajuste la transformation selon le niveau de comptage, ce qui la rend plus robuste pour les faibles valeurs.
 ```
 rld <- rlog(DESeq.ds, blind = FALSE)
 rlog.norm.counts <- assay(rld)
 
 ```
-
+L’objet rld contient les valeurs normalisées et transformées, prêtes à être utilisées pour les analyses exploratoires telles que la PCA, les dendrogrammes ou les heatmaps.
+Les données extraites via assay(rld) (rlog.norm.counts) représentent une version stabilisée et comparable des comptages d’origine.
 
 ## Résultats
 
