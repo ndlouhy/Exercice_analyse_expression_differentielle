@@ -90,28 +90,40 @@ genes_description <- data_file[, !grepl("^Sample_", colnames(data_file))]
 Les tableaux peuvent être retrouvé ici.
 
 ### Etapes de filtres des données.
+#### Suppression des gènes non exprimés
 
-A présent, nous devons filtrer les données. Cette étapes est importante car elle va permettre d'enlever les gènes trop faiblement exprimés. Cela va permettre de réduire le bruit et ainsi réduire la variance pour augmenter notre pouvoir statistique.
+Avant de procéder à l’analyse différentielle, il est essentiel de filtrer les données.
+Cette étape vise à retirer les gènes faiblement exprimés ou non exprimés, qui n’apportent pas d’information biologique utile.
+En supprimant ces gènes, on réduit le bruit dans les données et diminue la variance, ce qui améliore la puissance statistique des tests de DESeq2.
 
-En première étape nous allons d'abord enlever les gènes qui sont exprimés dans aucune librairie. Ces gènes sont donc pas utile dans l'analyse.
+La première étape consiste à retirer les gènes qui ne sont exprimés dans aucun échantillon (valeur de comptage nulle pour toutes les librairies).
+Ces gènes ne contribuent pas à la variabilité observée et peuvent être exclus sans perte d’information.
 
 ```
 ### -----------------------
 ### Data filtering
 ### -----------------------
 
-# # Compte le nombre de gènes exprimé dans aucun échantillon
+# # Comptage des gènes non exprimés dans aucun échantillon
 table(rowSums(ReadCount) == 0)
 
-# Suppression des gènes
+# Suppression de ces gènes
 ReadCount <- ReadCount[rowSums(ReadCount) > 0, ]
 
 # Vérification
 table(rowSums(ReadCount) == 0)
 ```
-Dans notre cas aucun gène n'est exprimé dans aucune librairie, aucun n'a été supprimé.
+Dans notre cas, aucun gène n’était totalement non exprimé, donc aucun n’a été supprimé à cette étape.
 
-Ensuite pour aller plus loin nous allons dans le filtre des gènes non informatif, nous allons utiliser la méthode CPM (Counts Per Million). Cette méthode consiste à diviser le nombre de reads mappant sur la librairie par le nombre total de la librairie multiplié par 1 million. Nous avons définis un seuil arbitraire de 10. Les gènes qui dépasse ce seuil dans au moins deux librairies sont conservés.
+#### Filtrage basé sur le CPM (Counts Per Million)
+
+Pour aller plus loin, nous appliquons un filtrage des gènes faiblement exprimés à l’aide de la méthode CPM (Counts Per Million).
+Cette approche tient compte de la profondeur de séquençage de chaque librairie, ce qui permet une comparaison équitable des niveaux d’expression entre échantillons.
+
+Le CPM se calcul en divisant le nombre de lectures mappant pour un gène d'une librairie par le nombre de lecture total de la librairie multiplié par 1 million.
+J'ai choisi un seuil arbitraire de 10 CPM. Seuls les gènes suppérieur à ce seuil dans au moins 2 librairies sont conservés.
+
+J'ai choisi de travailler avec la méthode des CPM car c'est une méthode souvent la méthode standard de filtration lors d'une analyse différentielle.
 
 ```
 # Défiition du seuil à 10 cpm
@@ -124,7 +136,7 @@ keep <- rowSums(cpm(ReadCount)>cutoff[1]) >= 2
 ReadCount <- ReadCount[keep,]
 ```
 
-A la fin des ces étapes de filtration, nous passons de 33808 gènes à 22050. 11758 gènes ont été supprimés.
+À l’issue de ces étapes de filtrage, le jeu de données passe de 33 808 gènes à 22 050 gènes. Ainsi 11758 gènes ont été supprimés car ils présentaient des niveaux d’expression trop faibles pour être statistiquement exploitables.
 
 ## Résultats
 
