@@ -325,7 +325,7 @@ results.DESeq2_1v3 <- DGE.results_1v3
 results.DESeq2_2v3 <- DGE.results_2v3
 ```
 
-![MA_plots]()
+![MA_plots](Plots/MAplots_allGroups.png)
 
 ## Résultats
 
