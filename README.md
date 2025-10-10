@@ -146,7 +146,7 @@ ReadCount <- ReadCount[keep,]
 
 Une fois les données de comptage filtrées, nous pouvons créer l’objet DESeqDataSet, qui servira de base lors de l’analyse avec DESeq2.
 
-Cet objet combine :
+Cet objet prend en compte :
 
 - les comptages bruts filtrés (countData),
 
@@ -211,7 +211,7 @@ ggplot(pcaData, aes(PC1, PC2, color = group, label = name)) +
   theme_bw() +
   ggtitle("PCA des échantillons par regroupement par groupe expérimental")
 ```
-## Introduire Image de l'ACP ##
+[[https://github.com/ndlouhy/Exercice_analyse_expression_differentielle.git/Plots/ACP.png]]
 
 En observant l’ACP, on remarque deux éléments importants.
 
