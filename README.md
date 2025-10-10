@@ -257,6 +257,75 @@ plot(hclust(distance.m_rlog), labels = colnames(rlog.norm.counts),
 
 ```
 
+### Suppression des outliers
+
+```
+# Définition des outliers :
+outliers <- c("Sample_2", "Sample_3", "Sample_7", "Sample_12")
+
+# Suppression des outliers du fichier de comptage
+ReadCount_filtered <- ReadCount[, !(colnames(ReadCount) %in% outliers)]
+
+# Suppression des outliers du fichier de métadonnées
+meta_filtered <- meta[!(meta$sample %in% outliers), ]
+
+# Création du nouveau objet DESeq
+DESeq.ds <- DESeqDataSetFromMatrix (countData = ReadCount_filtered,
+                                    colData = meta_filtered,
+                                    design = ~ group)
+
+# Normalisation du nouvel objet
+DESeq.ds <- estimateSizeFactors(DESeq.ds)
+DESeq.ds@colData$sizeFactor
+
+# Transformation logarthmique
+rld <- rlog(DESeq.ds, blind = FALSE)
+rlog.norm.counts <- assay(rld)
+```
+On réalise une vérification graphique du nouveau jeu de données.
+
+![Dendrogramme wo_outliers_plot](Plots/PCA_wo_outliers.png)
+![Dendrogramme wo_outliers_plot](Plots/dendrogramme_wo_outliers.png)
+
+On remarque qu'on a bien enlevé les outliers, le jeu de données est plus structuré.
+
+## Analyse d'expression diffférentielle avec DESeq2.
+
+```
+reference_group <- "Group1"
+DESeq.ds$group <- factor(DESeq.ds$group, levels = c(reference_group, setdiff(levels(DESeq.ds$group), reference_group)))
+
+DESeq.ds <- DESeq(DESeq.ds)
+plotDispEsts(DESeq.ds)
+
+
+group1 <- "Group1"
+group2 <- "Group2"
+group3 <- "Group3"
+# here the method of adjustement of p-values is Benjamini and Hochberg (BH), also called FDR (false discovery rate)
+
+# Group 1 vs Group 2
+DGE.results_1v2 <- results(DESeq.ds, c("group", group1, group2), pAdjustMethod = "BH")
+summary(DGE.results_1v2)
+mcols(DGE.results_1v2, use.names = TRUE)
+
+# Group 1 vs Group 3
+DGE.results_1v3 <- results(DESeq.ds, c("group", group1, group3), pAdjustMethod = "BH")
+summary(DGE.results_1v3)
+mcols(DGE.results_1v3, use.names = TRUE)
+
+# Group 2 vs Group 3
+DGE.results_2v3 <- results(DESeq.ds, c("group", group2, group3), pAdjustMethod = "BH")
+summary(DGE.results_2v3)
+mcols(DGE.results_2v3, use.names = TRUE)
+
+# results
+results.DESeq2_1v2 <- DGE.results_1v2
+results.DESeq2_1v3 <- DGE.results_1v3
+results.DESeq2_2v3 <- DGE.results_2v3
+```
+
+![MA_plots]()
 
 ## Résultats
 
