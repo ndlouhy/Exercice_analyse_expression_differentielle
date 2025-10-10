@@ -138,6 +138,41 @@ ReadCount <- ReadCount[keep,]
 
 À l’issue de ces étapes de filtrage, le jeu de données passe de 33 808 gènes à 22 050 gènes. Ainsi 11758 gènes ont été supprimés car ils présentaient des niveaux d’expression trop faibles pour être statistiquement exploitables.
 
+### Création de l'objet DESeq et normalisations.
+
+#### Création de la matrice de design
+A présent nous pouvons définir l'objet DESeq. Il s'agit de la matrice de design avec par ligne les librairies avec les données bruts filtrées, en colonne les conditions expérimentales et en design les groupes définis.
+C'est à partir de cette patrice que DESeq va pouvoir travailler.
+
+```
+DESeq.ds <- DESeqDataSetFromMatrix(countData = ReadCount,
+                                   colData = meta,
+                                   design = ~ group)
+
+```
+
+#### Normalisation
+
+DESeq va alors réaliser une normalisation des données pour les rendre comparables et analysables.
+Il y a une normalisation inter-échantillon.
+On normalise par la tailles des transcrits ainsi que par la taille des librairies poru que tout soit comparable.
+
+```
+DESeq.ds <- estimateSizeFactors(DESeq.ds)
+DESeq.ds@colData$sizeFactor
+
+```
+
+Ensuite j'ai procédé à une transformation logarithmique.
+C'est pour réduire l'influence des valeurs extrèmes en stabilisant la variance entre les gènes faiblement et fortement exprimés.
+
+```
+rld <- rlog(DESeq.ds, blind = FALSE)
+rlog.norm.counts <- assay(rld)
+
+```
+
+
 ## Résultats
 
 ## Conclusion
