@@ -13,6 +13,8 @@ L'objectif de l’analyse est double. Dans un premier temps, il faut déterminer
 
 ## Analyse
 
+## Introduire schéma du pipeline d'analyse ##
+
 ### Import du jeu de données
 Dans un premier temps, il faut importer le jeu de données.
 ```
@@ -189,13 +191,14 @@ Les données extraites via assay(rld) (rlog.norm.counts) représentent une versi
 ### Analyses exploiratoires
 #### ACP
 
-Cette analyse permet de capturer les niveau de variance dans les données.
-Le but de cette approches exploratoire et d'observer la structure du jeu de données. 
-Observer si les échantillons de chaque groupe sont bien clusturisé, si il n'existe pas d'outliers. C'est à dire d'échantillon qui ne présente pas le même profile d'expression que ses réplicats.
+L’analyse en composantes principales (ACP) est une méthode exploratoire permettant de résumer la variance présente dans les données et ainsi y visualiser la structure globale.
 
-Les outliers sont un problème car ils vont apporter une variance qui n'est pas du à un problème biologique réel mais du à un effet de l'expérience ou à un effet de batch.
+L’objectif de cette approche ex ploratoire est d’évaluer si les échantillons se regroupent par condition expérimentale (clustering cohérent par groupe), s’il existe des outliers (échantillons atypiques) et enfin si une séparation claire entre groupes est observable, suggérant une variabilité biologique.
 
-L'observation de la structure du jeu de données est très importante car cela nous donne des informations si il existe un variance entre les groupes donc si notre analyse sera pertinante. Si tous les échantillons sont clusterisé ensemble, cela voudrais dire qu'il n'y a pas de variance entre les échantillons donc l'analyse d'expression différentielle ne serait pas pertinente.
+La détection des outliers est primordiale car ils introduisent une variance non biologique, souvent liée à des effets techniques (effet de batch, qualité de séquençage, préparation d’échantillon, etc.).
+Les identifier à ce stade est donc essentiel pour éviter qu’ils ne biaisent l’analyse différentielle.
+
+Enfin, observer la structure globale des données est une étape importante. En effet, si les échantillons de groupes distincts ne se séparent pas sur les axes principaux, cela suggère une faible variance intergroupe, et donc un faible potentiel de détection de gènes différentiellement exprimés.
 
 ```
 pcaData <- plotPCA(rld, intgroup = "group", returnData = TRUE)
@@ -210,12 +213,49 @@ ggplot(pcaData, aes(PC1, PC2, color = group, label = name)) +
 ```
 ## Introduire Image de l'ACP ##
 
-En regardant l'ACP, on observe deux choses importantes, la première est la présence d'outliers et la seconde sur la structure du jeu de données.
+En observant l’ACP, on remarque deux éléments importants.
 
-Dans un premier temps on remarque 4 échantillons qui sont anormalement éloignés des autres échantillons du même groupe. Les échantillons 2, 3 et 7 du groupe 1 et l'échantillon 12 du groupe 2.
-La seconde observation est que le groupe 1 est indépendant des deux autres groupes, la ou le groupe 2 et 3 semblent mélangé.
-On peut donc se dire qu'il existe une variance notable entre les groupe 1 contre 2 et 3 mais que les groupes 2 et 3 semblent très semblable.
+Présence d’outliers :
+Les échantillons 2, 3 et 7 du groupe 1, ainsi que l’échantillon 12 du groupe 2, apparaissent nettement éloignés de leurs réplicats respectifs.
+Ces échantillons sont susceptibles d’introduire un bruit non biologique.
 
+Structure globale des groupes :
+Le groupe 1 se sépare nettement des groupes 2 et 3, indiquant une variance biologique importante entre ces conditions.
+En revanche, les groupes 2 et 3 semblent fortement corrélés, suggérant des profils d’expression génique similaires.
+
+Ces observations confirment la pertinence de la comparaison du groupe 1 contre les groupes 2 et 3, tandis que la comparaison entre groupes 2 et 3 pourrait révéler peu de gènes différentiellement exprimés.
+
+### Dendrogramme 
+
+L’analyse du dendrogramme permet d’obtenir une vision hiérarchique de la structure topologique du jeu de données.
+Ce graphique illustre les similarités globales entre les échantillons en se basant sur leurs profils d’expression génique, et complète donc l’analyse réalisée par l’ACP.
+
+Dans un premier temps, j’ai calculé une matrice de corrélation entre tous les échantillons à partir des comptages normalisés (rlog.norm.counts).
+Chaque valeur de corrélation mesure la similarité des profils d’expression entre deux échantillons. Deux échantillons ayant un profil d’expression similaire présentent une corrélation élevée, tandis que des échantillons très différents auront une corrélation faible ou négative.
+
+À partir de cette matrice de corrélation, on calcule ensuite une matrice de distance utilisée pour la classification hiérarchique.
+La distance est définie ici comme 1 - corrélation, ce qui signifie que plus deux échantillons sont corrélés, plus leur distance est faible.
+
+
+J’ai choisi la corrélation de Pearson car elle mesure la similarité de la forme globale des profils d’expression entre deux échantillons, indépendamment de leurs niveaux d’expression absolus.
+Donc, elle évalue si les gènes varient dans la même direction (hausse ou baisse d’expression), même si l’intensité de cette variation diffère.
+
+
+## Introduire Dendrogramme ##
+
+Le dendrogramme obtenu montre que les échantillons se regroupent majoritairement selon leur groupe expérimental, confirmant la cohérence globale des données.
+On retrouve une séparation entre le groupe 1 et les groupes 2 et 3, ces deux derniers semblant encore être mélangé.
+
+Cependant, plusieurs outliers apparaissent clairement. En effet, l’échantillon 3 est très éloigné des autres échantillons du groupe 1, l’échantillon 12 s’écarte également du groupe 2, tandis que les échantillons 2 et 7 du groupe 1 se situent en périphérie de leur cluster.
+
+Pour la suite de l’analyse, j’ai donc pris la décision de retirer les échantillons 2, 3, 7 et 12.
+Après cette filtration, le groupe 1 conserve 5 réplicats, ce qui reste suffisant pour représenter de manière fiable la variabilité intra-groupe.
+```
+distance.m_rlog  <- as.dist(1 - cor(rlog.norm.counts , method = "pearson" ))
+plot(hclust(distance.m_rlog), labels = colnames(rlog.norm.counts),
+     main = "Dendrogramme représentant la distance entre les échantillons\ndistance: Pearson  correlation")
+
+```
 
 
 ## Résultats
