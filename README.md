@@ -211,7 +211,7 @@ ggplot(pcaData, aes(PC1, PC2, color = group, label = name)) +
   theme_bw() +
   ggtitle("PCA des échantillons par regroupement par groupe expérimental")
 ```
-[[https://github.com/ndlouhy/Exercice_analyse_expression_differentielle.git/Plots/ACP.png]]
+[[https://github.com/ndlouhy/Exercice_analyse_expression_differentielle.git/Plots/PCA.png]]
 
 En observant l’ACP, on remarque deux éléments importants.
 
