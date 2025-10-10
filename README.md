@@ -211,7 +211,7 @@ ggplot(pcaData, aes(PC1, PC2, color = group, label = name)) +
   theme_bw() +
   ggtitle("PCA des échantillons par regroupement par groupe expérimental")
 ```
-[[https://github.com/ndlouhy/Exercice_analyse_expression_differentielle.git/Plots/PCA.png]]
+![PCA plot](Plots/PCA.png)
 
 En observant l’ACP, on remarque deux éléments importants.
 
@@ -241,7 +241,7 @@ J’ai choisi la corrélation de Pearson car elle mesure la similarité de la fo
 Donc, elle évalue si les gènes varient dans la même direction (hausse ou baisse d’expression), même si l’intensité de cette variation diffère.
 
 
-## Introduire Dendrogramme ##
+![Dendrogramme plot](Plots/dendrogramme.png)
 
 Le dendrogramme obtenu montre que les échantillons se regroupent majoritairement selon leur groupe expérimental, confirmant la cohérence globale des données.
 On retrouve une séparation entre le groupe 1 et les groupes 2 et 3, ces deux derniers semblant encore être mélangé.
