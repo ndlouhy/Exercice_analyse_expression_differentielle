@@ -186,6 +186,38 @@ rlog.norm.counts <- assay(rld)
 L’objet rld contient les valeurs normalisées et transformées, prêtes à être utilisées pour les analyses exploratoires telles que la PCA, les dendrogrammes ou les heatmaps.
 Les données extraites via assay(rld) (rlog.norm.counts) représentent une version stabilisée et comparable des comptages d’origine.
 
+### Analyses exploiratoires
+#### ACP
+
+Cette analyse permet de capturer les niveau de variance dans les données.
+Le but de cette approches exploratoire et d'observer la structure du jeu de données. 
+Observer si les échantillons de chaque groupe sont bien clusturisé, si il n'existe pas d'outliers. C'est à dire d'échantillon qui ne présente pas le même profile d'expression que ses réplicats.
+
+Les outliers sont un problème car ils vont apporter une variance qui n'est pas du à un problème biologique réel mais du à un effet de l'expérience ou à un effet de batch.
+
+L'observation de la structure du jeu de données est très importante car cela nous donne des informations si il existe un variance entre les groupes donc si notre analyse sera pertinante. Si tous les échantillons sont clusterisé ensemble, cela voudrais dire qu'il n'y a pas de variance entre les échantillons donc l'analyse d'expression différentielle ne serait pas pertinente.
+
+```
+pcaData <- plotPCA(rld, intgroup = "group", returnData = TRUE)
+percentVar <- round(100 * attr(pcaData, "percentVar"))
+ggplot(pcaData, aes(PC1, PC2, color = group, label = name)) +
+  geom_point(size=3) +
+  geom_text_repel(size=3, max.overlaps=10) +
+  xlab(paste0("PC1: ", percentVar[1], "% variance")) +
+  ylab(paste0("PC2: ", percentVar[2], "% variance")) +
+  theme_bw() +
+  ggtitle("PCA des échantillons par regroupement par groupe expérimental")
+```
+## Introduire Image de l'ACP ##
+
+En regardant l'ACP, on observe deux choses importantes, la première est la présence d'outliers et la seconde sur la structure du jeu de données.
+
+Dans un premier temps on remarque 4 échantillons qui sont anormalement éloignés des autres échantillons du même groupe. Les échantillons 2, 3 et 7 du groupe 1 et l'échantillon 12 du groupe 2.
+La seconde observation est que le groupe 1 est indépendant des deux autres groupes, la ou le groupe 2 et 3 semblent mélangé.
+On peut donc se dire qu'il existe une variance notable entre les groupe 1 contre 2 et 3 mais que les groupes 2 et 3 semblent très semblable.
+
+
+
 ## Résultats
 
 ## Conclusion
