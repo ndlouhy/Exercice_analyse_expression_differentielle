@@ -463,4 +463,20 @@ Pour chaque condition j'ai également créé un tableau combinant à la fois le 
 | 9 | ENSMUSG00000027698  | 5087.5581 | -3.765372      | 0.1264200 | -29.78463  | 6.179080e-195  | 1.496299e-191  | Nceh1     | 3        | 27182965   | 27284608| +           | 5253       | protein_coding | neutral cholesterol ester hydrolase 1 [Source:MGI Symbol;Acc:MGI:2443191]   | -         |
 |10 | ENSMUSG00000026358  | 2075.0277 | -6.489050      | 0.2217581 | -29.26184  | 3.174184e-188  | 6.917817e-185  | Rgs1      | 1        | 144242296  | 144249242| -          | 6947       | protein_coding | regulator of G-protein signaling 1 [Source:MGI Symbol;Acc:MGI:1354694]       | -         |
 
+Voici un dataframe montrant les 10 gènes différentiellement exprimé pour chaque condition.
+
+| Position | Condition 1v2 | Condition 1v3 | Condition 2v3 |
+|----------|----------------|----------------|----------------|
+| 1        | Il7r           | Il7r           | Ppp2r5b        |
+| 2        | Trem2          | Ubd            | Elovl6         |
+| 3        | Arhgap25       | Trem2          | Scd2           |
+| 4        | Ubd            | Arhgap25       | Scd1           |
+| 5        | Il1rn          | Lat2           | Lss            |
+| 6        | Adam8          | Rgs1           | Fam78b         |
+| 7        | Lat2           | Adam8          | Spry3          |
+| 8        | Slc37a2        | Il1rn          | Lpcat3         |
+| 9        | Nceh1          | Itgax          | Acss2          |
+| 10       | Rgs1           | Nceh1          | Dhcr7          |
+
+
 ## Conclusion
