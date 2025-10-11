@@ -341,6 +341,94 @@ results.DESeq2_2v3 <- DGE.results_2v3
 
 ![MA_plots](Plots/MAplots_allGroups.png)
 
+### Création des tableaux de résultats
+
+A présent nous finissons notre analyse par créer les tableaux de résultats.
+Ici est présenté le code pour uniquement la condition de comparaison entre le groupe 1 et le groupe 2 mais toute les conditions ont été analysées.
+
+Pour avoir les gènes les plus significatifs j'ai décidé de prendre une valeur de alpha = 0.001.
+
+Les gènes conservés seront alors uniquement ceux dont 
+
+```
+# Définition de la valeur du risque alpha
+alpharisk <- 0.001
+
+# Trie par rapport à la valeur de la pvaleur ajustée
+DGE.results.sorted_1v2  <- DGE.results_1v2[order(DGE.results_1v2$padj), ]
+
+#  Création de la liste de gènes significatifs
+DESeq_results_1v2 <- DGE.results_1v2[DGE.results_1v2$padj < alpharisk & !is.na(DGE.results_1v2$padj),] 
+
+# Trie par rapport à la valeur de la pvaleur ajustée
+DESeq_results_sorted_1v2 <- DESeq_results_1v2[order(DESeq_results_1v2$padj),]
+
+# Création d'un dataframe de résultat
+DESeq_table_1v2 <- data.frame(
+  Geneid = rownames(DESeq_results_sorted_1v2),
+  baseMean = DESeq_results_sorted_1v2$baseMean,
+  log2FoldChange = DESeq_results_sorted_1v2$log2FoldChange,
+  lfcSE = DESeq_results_sorted_1v2$lfcSE,
+  stat = DESeq_results_sorted_1v2$stat,
+  pvalue = DESeq_results_sorted_1v2$pvalue,
+  padj = DESeq_results_sorted_1v2$padj
+)
+
+# Creation d'une table descriptive des gènes différentiellement exprimés
+# Fusionner en conservant l'ordre de DESeq_table_1v2
+DESeq_table_1v2_annotated <- cbind(
+  DESeq_table_1v2,
+  genes_description[match(DESeq_table_1v2$Geneid, rownames(genes_description)), ]
+)
+```
+On se retrouve avec une liste des gènes différentiellement exprimés pour chaque conditions.
+Les listes peuvent être retrouvées dans l'onglet Résultats/Tableaux/
+
+
+### Création des Heatmaps de résultats
+
+```
+# identify  genes  with  the  desired  adjusted p-value cut -off
+DGEgenes_1v2  <- rownames(subset(DGE.results.sorted_1v2, padj < alpharisk))
+
+# Extraction des données rlog
+rlog_mat <- assay(rld)
+
+# Palette de couleurs
+color_palette <- colorRampPalette(rev(brewer.pal(9, "RdBu")))(255)
+
+#-------------------------------------------
+#  HEATMAP pour comparaison Group1 vs Group2
+#-------------------------------------------
+DE_rlog_data_1v2 <- rlog_mat[intersect(rownames(rlog_mat), DGEgenes_1v2), ]
+rownames(DE_rlog_data_1v2) <- genes_description[rownames(DE_rlog_data_1v2), "gene_name"]
+DE_rlog_matrix_1v2 <- as.matrix(DE_rlog_data_1v2)
+
+# Vérifie qu’il y a bien des gènes sélectionnés
+if (nrow(DE_rlog_matrix_1v2) > 1) {
+  # Heatmap centrée par ligne (plus lisible)
+  heatmap.2(
+    DE_rlog_matrix_1v2,
+    scale = "row",
+    trace = "none",
+    col = color_palette,
+    main = "Heatmap entre le groupe 1 et le groupe 2",
+    
+    # Personnalisation du texte
+    labRow = NA,
+    cexCol = 1,    # réduire légèrement les noms d’échantillons
+    srtCol = 45,     # rotation diagonale des noms de colonnes
+    
+    # Ajustement de la disposition
+    margins = c(8, 10)  # marges : c(marge_bas, marge_gauche)
+  )
+  
+} else {
+  cat("Aucun gène significatif pour Group1 vs Group2\n")
+}
+```
+
+
 ## Résultats
 
 ## Conclusion
