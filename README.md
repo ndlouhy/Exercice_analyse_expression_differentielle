@@ -44,7 +44,7 @@ Voici la description détaillée des colonnes :
 | 35      | **gene_description** : Brève description de la fonction du gène                   |
 | 36      | **tf_family** : Famille de facteur de transcription à laquelle le gène appartient |
 
-Le jeu de données complet est disponible dans le dossier data/.
+Le jeu de données complet est disponible dans le dossier Data/.
 
 ### Création des fichiers d'analyse.
 
@@ -95,7 +95,15 @@ meta <- data.frame(
 genes_description <- data_file[, !grepl("^Sample_", colnames(data_file))]
 
 ```
-Les nouveaux fichiers sont peuvent être retrouvés dans le dossier Data.
+À l’issue de cette étape, nous obtenons trois objets principaux :
+
+- **ReadCount** : la matrice des comptages bruts par gène et par échantillon ;
+
+- **meta** : le tableau de métadonnées décrivant les conditions expérimentales ;
+
+- **genes_description** : le tableau des informations fonctionnelles sur les gènes.
+
+Ces fichiers sont disponibles dans le dossier Data/ et serviront de base à toutes les étapes suivantes de l’analyse
 
 ### Etapes de filtres des données.
 #### Suppression des gènes non exprimés
