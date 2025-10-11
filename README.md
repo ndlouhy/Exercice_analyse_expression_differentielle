@@ -50,9 +50,9 @@ Le jeu de données complet est disponible dans le dossier Data/.
 
 Pour réaliser une analyse d’expression différentielle, deux types de fichiers sont indispensables :
 
-1.Un fichier de comptages — contenant les valeurs brutes de lecture (nombre de reads alignés par gène et par échantillon).
+1. Un fichier de comptages — contenant les valeurs brutes de lecture (nombre de reads alignés par gène et par échantillon).
 
-2.Un fichier de métadonnées (metadata) — décrivant les informations expérimentales associées à chaque échantillon (conditions biologiques, groupes expérimentaux, etc.).
+2. Un fichier de métadonnées (metadata) — décrivant les informations expérimentales associées à chaque échantillon (conditions biologiques, groupes expérimentaux, etc.).
 
 Avec notre jeu de données, nous allons pouvoir créer en plus un fichier d’annotation des gènes contenant leurs descriptions fonctionnelles, ce qui facilitera l’interprétation biologique des résultats.
 
