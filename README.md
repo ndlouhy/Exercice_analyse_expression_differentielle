@@ -462,5 +462,7 @@ Voici un dataframe montrant les 10 gènes différentiellement exprimé pour chaq
 | 9        | Nceh1          | Itgax          | Acss2          |
 | 10       | Rgs1           | Nceh1          | Dhcr7          |
 
+### Heatmaps
 
+![Heatmaps](Results/Heatmaps/Heatmaps.png)
 ## Conclusion
