@@ -39,7 +39,7 @@ Col 34 : gene_biotype : Catégorie fonctionnelle du gène.\
 Col 35 : gene_description : Description de la fonction du gène.\
 Col 36 : tf_family : Catégorie de famille de facteurs de transcription du gène.
 
-Vous pouvez télécharger le jeu de données [ici]([Data/gene_count.xls](https://raw.githubusercontent.com/ndlouhy/Exercice_analyse_expression_differentielle/refs/heads/main/Data/gene_count.xls)).
+Vous pouvez télécharger le jeu de données [ici]([Data/gene_count.xls](https://raw.githubusercontent.com/ndlouhy/Exercice_analyse_expression_differentielle/refs/heads/main/Data/gene_count.xls).
 
 
 
