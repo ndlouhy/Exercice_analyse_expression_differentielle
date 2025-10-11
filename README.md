@@ -16,7 +16,8 @@ L'objectif de l’analyse est double. Dans un premier temps, il faut déterminer
 ## Introduire schéma du pipeline d'analyse ##
 
 ### Import du jeu de données
-Dans un premier temps, il faut importer le jeu de données.
+
+La première étape consiste à importer le jeu de données contenant les comptages de lectures par gène et par échantillon.
 ```
 file_path <- "data/gene_count.xls"
 
@@ -24,33 +25,36 @@ data_file <- read.table(file_path, header = T, sep = "\t")
 ```
 
 Description :
-Le jeu de données présente 35 colonnes pour 33 808 lignes.
-Il est présenté ainsi :
 
-Col 1 : gene_id : identifiant Ensembl du gène.\
-Col 2-27 : Sample_1-26 : Colonnes de comptages de lectures pour chaque échantillons.\
-Col 28 : gene_name : Nom du gène.\
-Col 29 : gene_chr : Chromosome ou se trouve le gène.\
-Col 30 : gene_start : Position de départ du gène.\
-Col 31 : gene_end : Position de fin du gène.\
-Col 32 : gene_strand : Brin du chromosome ou si trouve le gène.\
-Col 33 : gene_length : Longueur du gène.\
-Col 34 : gene_biotype : Catégorie fonctionnelle du gène.\
-Col 35 : gene_description : Description de la fonction du gène.\
-Col 36 : tf_family : Catégorie de famille de facteurs de transcription du gène.
+Le fichier contient 33 808 lignes (correspondant à des gènes) et 35 colonnes (informations d’expression et d’annotation).
 
-Vous pouvez télécharger le jeu de données [ici]([Data/gene_count.xls](https://raw.githubusercontent.com/ndlouhy/Exercice_analyse_expression_differentielle/refs/heads/main/Data/gene_count.xls).
+Voici la description détaillée des colonnes :
 
+| Colonne | Description                                                                       |
+| ------- | --------------------------------------------------------------------------------- |
+| 1       | **gene_id** : Identifiant Ensembl du gène                                         |
+| 2–27    | **Sample_1 à Sample_26** : Comptages bruts de lectures pour chaque échantillon    |
+| 28      | **gene_name** : Nom du gène                                                       |
+| 29      | **gene_chr** : Chromosome sur lequel se situe le gène                             |
+| 30      | **gene_start** : Position de départ du gène                                       |
+| 31      | **gene_end** : Position de fin du gène                                            |
+| 32      | **gene_strand** : Brin du chromosome (sens ou antisens)                           |
+| 33      | **gene_length** : Longueur du gène                                                |
+| 34      | **gene_biotype** : Catégorie fonctionnelle (ex. protéique, non codant, etc.)      |
+| 35      | **gene_description** : Brève description de la fonction du gène                   |
+| 36      | **tf_family** : Famille de facteur de transcription à laquelle le gène appartient |
 
+Le jeu de données complet est disponible dans le dossier data/.
 
 ### Création des fichiers d'analyse.
 
-Pour réaliser une analyse d'expression différentille nous avons besion de deux fichiers : 
+Pour réaliser une analyse d’expression différentielle, deux types de fichiers sont indispensables :
 
-- Un fichier de comptages, qui contient les compatges bruts des gènes pour chaque échantillons.\
-- Un fichier de métadonnées, qui contient toutes les données associées à l'expérience qui sont nécessaires à son interprétation
+1.Un fichier de comptages — contenant les valeurs brutes de lecture (nombre de reads alignés par gène et par échantillon).
 
-Avec notre jeu de données, nous allons pouvoir créer en plus un fichier qui va contenir toutes les informations de description des gènes.
+2.Un fichier de métadonnées (metadata) — décrivant les informations expérimentales associées à chaque échantillon (conditions biologiques, groupes expérimentaux, etc.).
+
+Avec notre jeu de données, nous allons pouvoir créer en plus un fichier d’annotation des gènes contenant leurs descriptions fonctionnelles, ce qui facilitera l’interprétation biologique des résultats.
 
 ```
 ### -----------------------
@@ -91,8 +95,7 @@ meta <- data.frame(
 genes_description <- data_file[, !grepl("^Sample_", colnames(data_file))]
 
 ```
-
-Les tableaux peuvent être retrouvé ici.
+Les nouveaux fichiers sont peuvent être retrouvés dans le dossier Data.
 
 ### Etapes de filtres des données.
 #### Suppression des gènes non exprimés
