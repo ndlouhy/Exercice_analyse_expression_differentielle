@@ -464,8 +464,10 @@ Voici un dataframe montrant les 10 gènes différentiellement exprimé pour chaq
 
 ### Heatmaps
 
-![Heatmaps](Results/Heatmaps/Heatmap1v2.png)
-![Heatmaps](Results/Heatmaps/Heatmap1v3.png)
-![Heatmaps](Results/Heatmaps/Heatmap2v3.png)
+<p align="center">
+  <img src="Results/Heatmaps/Heatmap1v2.png" width="400"/>
+  <img src="Results/Heatmaps/Heatmap1v3.png" width="400"/>
+  <img src="Results/Heatmaps/Heatmap2v3.png" width="400"/>
+</p>
 
 ## Conclusion
