@@ -12,7 +12,7 @@ L’objectif de cet exercice est d’explorer un jeu de données de transcriptom
 L'objectif de l’analyse est double. Dans un premier temps, il faut déterminer la structure des données et évaluer si elles sont exploitable. Dans un second temps il faut réaliser une analyse d'expression différentielle afin d'identifier les tops gènes les plus différentiellement exprimés entre les conditions.
 
 ## Analyse
-![Pipeline_plot](Plots/Pipeline_plot.png)
+![Pipeline_plot](Plots/pipeline_analysis.png)
 
 ### Import du jeu de données
 
