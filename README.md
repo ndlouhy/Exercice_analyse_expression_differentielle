@@ -481,19 +481,38 @@ En revanche, la comparaison 2v3 met en évidence un ensemble de gènes totalemen
 
 A présent je me suis intéressé à la fonction des gènes les plus différentiellemet exprimés entre les conditions 1v2 et 1v3 :
 
-Il7r : interleukin 7 receptor.
-Trem2 : triggering receptor expressed on myeloid cells 2.
-Arhgap25 : Rho GTPase activating protein 25.
-Ubd : ubiquitin D.
-Il1rn : interleukin 1 receptor antagonist.
-Adam8 : a disintegrin and metallopeptidase domain 8.
-Lat2 : linker for activation of T cells family, member 2.
-Nceh1 : neutral cholesterol ester hydrolase 1.
-Rgs1 : regulator of G-protein signaling 1.
-Itgax : integrin alpha X.
+Il7r : interleukin 7 receptor.\
+Trem2 : triggering receptor expressed on myeloid cells 2.\
+Arhgap25 : Rho GTPase activating protein 25.\
+Ubd : ubiquitin D.\
+Il1rn : interleukin 1 receptor antagonist.\
+Adam8 : a disintegrin and metallopeptidase domain 8.\
+Lat2 : linker for activation of T cells family, member 2.\
+Nceh1 : neutral cholesterol ester hydrolase 1.\
+Rgs1 : regulator of G-protein signaling 1.\
+Itgax : integrin alpha X.\
 Slc37a2 : solute carrier family 37.
 
-On observe que sur les 10 gènes, 5 sont impliqué dans la réponse immunitaire. Sachant qu'ils sont moins exprimés dans le groupe 1 cela pour nous faire penser que ce groupe possède une inhibition dans ces fonctions.
+On observe que sur les 10 gènes, 5 sont impliqué dans la réponse immunitaire et les processus inflammatoires. Sachant qu'ils sont moins exprimés dans le groupe 1 cela pour nous faire penser que ce groupe possède une inhibition dans ces fonctions.
+
+L’analyse différentielle met en évidence un ensemble de gènes principalement impliqués dans la réponse immunitaire et les processus inflammatoires.
+Les gènes tels que Il7r, Il1rn, Lat2 et Trem2 sont associés à la signalisation et à la régulation des cellules immunitaires, notamment les lymphocytes T et les cellules myéloïdes.
+
+Quand on regarde les 10 gènes les plus différentiellement exprimés entre les conditions
+
+Ppp2r5b : protein phosphatase 2, regulatory subunit B
+Elovl6 : ELOVL family member 6, elongation of long chain fatty acids (yeast)
+Scd2 : stearoyl-Coenzyme A desaturase 2
+Scd1 : stearoyl-Coenzyme A desaturase 1
+Lss : lanosterol synthase
+Fam78b : family with sequence similarity 78, member B
+Spry3 : sprouty RTK signaling antagonist 3
+Lpcat3 : lysophosphatidylcholine acyltransferase 3
+Acss2 : acyl-CoA synthetase short-chain family member 2
+Dhcr7 : 7-dehydrocholesterol reductase
+
+Les top 10 gènes les plus différentiellement exprimé entre les conditions sont des gènes impliqués dans régulation du métabolisme lipidique et du cholestérol.
+
 
 ### Heatmaps
 
@@ -504,5 +523,9 @@ On observe que sur les 10 gènes, 5 sont impliqué dans la réponse immunitaire.
 </p>
 
 ## Conclusion
+ Pour conclure 
+ On a vu comment le jeu de données était fait et comment on a pu le traiter pour avoir des jeu de données exploitables pour réaliser une analyse d'expression différentielle.
+ Nous avons vu comment était structuré le jeu de données
 
+ On a vu que les gène les plus différenciellement structurés 
 
