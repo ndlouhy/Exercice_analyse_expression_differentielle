@@ -341,12 +341,11 @@ results.DESeq2_2v3 <- DGE.results_2v3
 
 ### Création des tableaux de résultats
 
-A présent nous finissons notre analyse par créer les tableaux de résultats.
-Ici est présenté le code pour uniquement la condition de comparaison entre le groupe 1 et le groupe 2 mais toute les conditions ont été analysées.
+A présent, nous arrivons à la dernière étape de notre analyse, la génération des tableaux de résultats présentant les gènes différentiellement exprimés pour chaque condition.
+Le code ci-dessous présente le déroulé pour la comparaison entre le Groupe 1 et le Groupe 2, mais les mêmes étapes ont été réalisées pour les autres comparaisons.
 
-Pour avoir les gènes les plus significatifs j'ai décidé de prendre une valeur de alpha = 0.001.
-
-Les gènes conservés seront alors uniquement ceux dont 
+Afin d’obtenir uniquement les gènes présentant les différences d’expression avec la plus forte confiance, j’ai fixé un seuil de significativité (α) à 0.001.
+Ainsi, seuls les gènes dont la p-value ajustée (padj) est inférieure à ce seuil sont considérés comme significativement différentiellement exprimés.
 
 ```
 # Définition de la valeur du risque alpha
@@ -379,11 +378,15 @@ DESeq_table_1v2_annotated <- cbind(
   genes_description[match(DESeq_table_1v2$Geneid, rownames(genes_description)), ]
 )
 ```
-On se retrouve avec une liste des gènes différentiellement exprimés pour chaque conditions.
-Les listes peuvent être retrouvées dans l'onglet Résultats/Tableaux/
+Nous obtenons donc pour chaque condition de comparaison une table annotée contenant à la fois les statistiques issues de DESeq2 (log2FoldChange, pvalue, padj, etc.) ainsi que les informations descriptives associées à chaque gène (nom, chromosome, fonction...).
+
+L’ensemble des tables de résultats est disponible dans le dossier Results/Tableaux/.
 
 
 ### Création des Heatmaps de résultats
+
+L’étape suivante consiste à visualiser les gènes différentiellement exprimés à l’aide de Heatmaps.
+Ces visualisations permettent de comparer les profils d’expression entre groupes et d’identifier les tendances globales de régulation des gènes significatifs.
 
 ```
 # identify  genes  with  the  desired  adjusted p-value cut -off
@@ -427,27 +430,35 @@ if (nrow(DE_rlog_matrix_1v2) > 1) {
 ```
 
 
+
 ## Résultats
 
 ### Tableaux des gènes différentiellement exprimés.
 
-Voici les 10 premières ligne du tableau de résultat de la comparaison entre le Groupe 1 et le Groupe 2.
+Le tableau ci-dessous présente les 10 gènes les plus significativement différentiellement exprimés entre le Groupe 1 et le Groupe 2 :
 
-| # | Geneid               | baseMean   | log2FoldChange | lfcSE      | stat       | pvalue         | padj           |
-|---|---------------------|-----------|----------------|-----------|------------|----------------|----------------|
-| 1 | ENSMUSG00000003882  | 2657.1975 | -4.9717345     | 0.1186992 | -41.88516  | 0.000000e+00   | 0.000000e+00   |
-| 2 | ENSMUSG00000023992  | 9680.1804 | -4.8105520     | 0.1407925 | -34.16767  | 7.307258e-256  | 7.962719e-252  |
-| 3 | ENSMUSG00000030047  | 4835.7783 | -4.0720090     | 0.1202919 | -33.85106  | 3.501675e-251  | 2.543850e-247  |
-| 4 | ENSMUSG00000035186  | 6250.3992 | -5.5092101     | 0.1701243 | -32.38343  | 4.696855e-230  | 2.559081e-226  |
-| 5 | ENSMUSG00000026981  | 1436.0807 | -4.6834980     | 0.1472186 | -31.81322  | 4.249229e-222  | 1.852154e-218  |
-| 6 | ENSMUSG00000025473  | 10263.0629| -4.6526886     | 0.1512532 | -30.76093  | 8.734961e-208  | 3.172829e-204  |
-| 7 | ENSMUSG00000040751  | 1783.9151 | -3.7081071     | 0.1219966 | -30.39516  | 6.364179e-203  | 1.981442e-199  |
-| 8 | ENSMUSG00000032122  | 8004.5078 | -4.5011513     | 0.1507273 | -29.86288  | 5.973995e-196  | 1.627466e-192  |
-| 9 | ENSMUSG00000027698  | 5087.5581 | -3.7653723     | 0.1264200 | -29.78463  | 6.179080e-195  | 1.496299e-191  |
-|10 | ENSMUSG00000026358  | 2075.0277 | -6.4890499     | 0.2217581 | -29.26184  | 3.174184e-188  | 6.917817e-185  |
+| #  | Geneid             | GeneName | baseMean   | log2FoldChange | lfcSE     | stat       | pvalue        | padj          |
+|----|--------------------|-----------|-------------|----------------|-----------|-------------|----------------|----------------|
+| 1  | ENSMUSG00000003882 | Il7r      | 2657.1975   | -4.971735      | 0.11869919 | -41.88516  | 0.000000e+00  | 0.000000e+00  |
+| 2  | ENSMUSG00000023992 | Trem2     | 9680.1804   | -4.810552      | 0.14079249 | -34.16767  | 7.307258e-256 | 7.962719e-252 |
+| 3  | ENSMUSG00000030047 | Arhgap25  | 4835.7783   | -4.072009      | 0.12029194 | -33.85106  | 3.501675e-251 | 2.543850e-247 |
+| 4  | ENSMUSG00000035186 | Ubd       | 6250.3992   | -5.509210      | 0.17012435 | -32.38343  | 4.696855e-230 | 2.559081e-226 |
+| 5  | ENSMUSG00000026981 | Il1rn     | 1436.0807   | -4.683498      | 0.14721861 | -31.81322  | 4.249229e-222 | 1.852154e-218 |
+| 6  | ENSMUSG00000025473 | Adam8     | 10263.0629  | -4.652689      | 0.15125321 | -30.76093  | 8.734961e-208 | 3.172829e-204 |
+| 7  | ENSMUSG00000040751 | Lat2      | 1783.9151   | -3.708107      | 0.12199662 | -30.39516  | 6.364179e-203 | 1.981442e-199 |
+| 8  | ENSMUSG00000032122 | Slc37a2   | 8004.5078   | -4.501151      | 0.15072731 | -29.86288  | 5.973995e-196 | 1.627466e-192 |
+| 9  | ENSMUSG00000027698 | Nceh1     | 5087.5581   | -3.765372      | 0.12641999 | -29.78463  | 6.179080e-195 | 1.496299e-191 |
+| 10 | ENSMUSG00000026358 | Rgs1      | 2075.0277   | -6.489050      | 0.22175808 | -29.26184  | 3.174184e-188 | 6.917817e-185 |
+
+On observe que tous les log2FoldChange sont négatifs, montrant que ces gènes sont moins exprimés dans le Groupe 1 et donc plus exprimés dans le Groupe 2.
+Autrement dit, il s’agit soit d’une sous-expression dans le groupe 1, soit d’une sur-expression dans le groupe 2.
+
+Les valeurs extrêmement faibles de padj traduisent une forte confiance statistique dans la détection de ces différences d’expression.
 
 
-Voici un dataframe montrant les 10 gènes différentiellement exprimé pour chaque condition.
+Comparaison des gènes les plus différentiellement exprimés entre conditions
+
+Afin d’obtenir une vue d’ensemble, les 10 gènes les plus différentiellement exprimés ont été identifiés pour chaque condition de comparaison :
 
 | Position | Condition 1v2 | Condition 1v3 | Condition 2v3 |
 |----------|----------------|----------------|----------------|
@@ -462,6 +473,28 @@ Voici un dataframe montrant les 10 gènes différentiellement exprimé pour chaq
 | 9        | Nceh1          | Itgax          | Acss2          |
 | 10       | Rgs1           | Nceh1          | Dhcr7          |
 
+On remarque une forte similarité entre les conditions 1v2 et 1v3 : sur les 10 gènes les plus différentiellement exprimés, 8 sont communs.
+Seuls Slc37a2 (spécifique à 1v2) et Itgax (spécifique à 1v3) diffèrent.
+En revanche, la comparaison 2v3 met en évidence un ensemble de gènes totalement distinct, suggérant un profil d’expression spécifique à ces groupes.
+
+### Identifiaction de la fonction des gènes
+
+A présent je me suis intéressé à la fonction des gènes les plus différentiellemet exprimés entre les conditions 1v2 et 1v3 :
+
+Il7r : interleukin 7 receptor.
+Trem2 : triggering receptor expressed on myeloid cells 2.
+Arhgap25 : Rho GTPase activating protein 25.
+Ubd : ubiquitin D.
+Il1rn : interleukin 1 receptor antagonist.
+Adam8 : a disintegrin and metallopeptidase domain 8.
+Lat2 : linker for activation of T cells family, member 2.
+Nceh1 : neutral cholesterol ester hydrolase 1.
+Rgs1 : regulator of G-protein signaling 1.
+Itgax : integrin alpha X.
+Slc37a2 : solute carrier family 37.
+
+On observe que sur les 10 gènes, 5 sont impliqué dans la réponse immunitaire. Sachant qu'ils sont moins exprimés dans le groupe 1 cela pour nous faire penser que ce groupe possède une inhibition dans ces fonctions.
+
 ### Heatmaps
 
 <p align="center">
@@ -471,3 +504,5 @@ Voici un dataframe montrant les 10 gènes différentiellement exprimé pour chaq
 </p>
 
 ## Conclusion
+
+
