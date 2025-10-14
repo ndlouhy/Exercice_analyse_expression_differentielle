@@ -358,9 +358,15 @@ results.DESeq2_2v3 <- DGE.results_2v3
 
 ### Création des tableaux de résultats
 
-A présent, nous arrivons à la dernière étape de notre analyse, la génération des tableaux de résultats présentant les gènes différentiellement exprimés pour chaque condition.
+À présent, nous abordons la dernière étape de notre analyse, la génération des tableaux de résultats présentant les gènes différentiellement exprimés pour chaque condition de comparaison.
 
-je définis une condtion, la comparaison entre de l'expression différentielle entre deux groupes. La condition 1v2, représente la comparasion entre le groupe 1 et 2, La condition 1v3 et la comparaison du groupe 1 avec le groupe 3 et la condition 2v3 est la comparaison du groupe 2 avec le groupe3.
+Une condition correspond ici à la comparaison de l’expression génique entre deux groupes :
+
+* Condition 1v2 : comparaison entre le groupe 1 et le groupe 2,
+
+* Condition 1v3 : comparaison entre le groupe 1 et le groupe 3,
+
+* Condition 2v3 : comparaison entre le groupe 2 et le groupe 3.
 
 Le code ci-dessous présente le déroulé pour la comparaison entre le Groupe 1 et le Groupe 2, les mêmes étapes ont été réalisées pour les autres comparaisons.
 
@@ -461,8 +467,12 @@ if (nrow(DE_rlog_matrix_1v2) > 1) {
 |Nombre de gènes différentiellements exprimés | 7992          | 7423          | 157           |
 
 
-On observe que le nombre de gènes différentiellement exprimé entre les conditions n'est pas homogène entre les conditions. Les condition 1v2 et 1v3 partagent un nombre de gènes différentiellement exprimé relativement proche contrairement à la condition 2v3 qui possède un nombre très restreint.
-Ce résultat nous laisse penser à une similarité entre les groupes 2 et 3, car peut de gènes s'expriment différement. La ou le groupe 1 semble très différent avec beaucoup plus de gènes différentiellemtn exprimés.
+On observe que le nombre de gènes différentiellement exprimés varie fortement selon les conditions de comparaison.
+Les comparaisons 1v2 et 1v3 présentent un nombre de gènes différentiellement exprimés relativement proche, traduisant des profils transcriptionnels globalement similaires dans ces deux cas.
+En revanche, la comparaison 2v3 ne met en évidence qu’un nombre très restreint de gènes régulés, suggérant une forte similarité entre les groupes 2 et 3.
+
+Ainsi, le groupe 1 se distingue nettement des deux autres groupes, tandis que les groupes 2 et 3 apparaissent beaucoup plus proches sur le plan de l’expression génique.
+
 
 
 Le tableau ci-dessous présente les 10 gènes les plus significativement différentiellement exprimés entre le Groupe 1 et le Groupe 2 :
@@ -486,7 +496,6 @@ Autrement dit, il s’agit soit d’une sous-expression relative dans le groupe 
 Les valeurs extrêmement faibles de padj traduisent une forte confiance statistique dans la détection de ces différences d’expression.
 
 
-Comparaison des gènes les plus différentiellement exprimés entre conditions
 
 Afin d’obtenir une vue d’ensemble, les 10 gènes les plus différentiellement exprimés ont été identifiés pour chaque condition de comparaison :
 
@@ -507,10 +516,6 @@ On remarque une forte similarité entre les conditions 1v2 et 1v3. En effet, sur
 Seuls Slc37a2 (spécifique à 1v2) et Itgax (spécifique à 1v3) diffèrent.
 En revanche, la condition 2v3 met en évidence un ensemble de gènes très différents, suggérant que les groupes 2 et 3 montrent une différences commune avec les groupe 1 mais qu'ils possèdent des différences spécifiques entre eux.
 
-
-On observe une forte similarité entre les conditions 1v2 et 1v3. En effet, parmi les 10 gènes les plus différentiellement exprimés, 8 sont communs.
-Seuls Slc37a2 (spécifique à 1v2) et Itgax (spécifique à 1v3) diffèrent.
-En revanche, la condition 2v3 révèle un ensemble de gènes totalement différents, suggérant que les Groupes 2 et 3 partagent un profil d’expression similaire par rapport au Groupe 1, mais présentent également des différences transcriptionnelles spécifiques entre eux.
 
 
 ### Interprétation fonctionnelle des gènes différentiellement exprimés.
@@ -572,19 +577,45 @@ Cela pourrait traduire une différence d’état physiologique comme par exemple
   <img src="Results/Heatmaps/Heatmap1v3.png" width="400"/>
   <img src="Results/Heatmaps/Heatmap2v3.png" width="400"/>
 </p>
+En observant les heatmaps, on remarque une forte similarité entre les conditions 1v2 et 1v3. En effet, on observe une démarcation nette entre les groupes, caractérisée par des blocs de gènes co-régulés, les gènes surexprimés dans un groupe sont généralement sous-exprimés dans l’autre. Cela traduit un profil d’expression globalement inverse entre les conditions.
+Ces résultats suggèrent donc l’existence d’une différence transcriptionnelle marquée entre le groupe 1 et les groupes 2 et 3.
 
-En observant les heatmpas, on remarque qu'elles sont similaire entre les condition 1v2 et 1v3.
+En revanche, la heatmap correspondant à la condition 2v3 révèle des différences d’expression plus subtiles. Les groupes 2 et 3 semblent partager une base transcriptionnelle commune, bien que certaines variations spécifiques dans l’expression de certains gènes soient observées. Cela confirme que les deux groupes sont globalement similaires, mais présentent quelques ajustements d’expression génique distincts.
 
-Pour ces deux conditions on observe une oppostion dans l'expression des gènes entre les conditions. Des groupes de gènes sous exprimé dans une condition se retrouve sur exprimé dans la seconde. On peut dire qu'il y a un changement dans l'expression des gènes suivant les conditions. De plus cette différence de profil d'expression est bien marquée suivant les conditions, traduiant des profils d'expression bien distinct.
-
-Un autre point que l'on observe est que les gènes sont différenciellement exprimé par bloc montrant qu'il y a une co-régulation de ces gènes. Les motifs indiquent donc qu'ils sont co-régulé différentiellement entre les conditions.
-
-La heatmap décrivant la condition 2v3 montre un différentiel d'expression entre le groupe 2 et 3 mais de manière moins clair.
 
 ## Conclusion
- Pour conclure 
- On a vu comment le jeu de données était fait et comment on a pu le traiter pour avoir des jeu de données exploitables pour réaliser une analyse d'expression différentielle.
- Nous avons vu comment était structuré le jeu de données
 
- On a vu que les gène les plus différenciellement structurés 
+Les analyses réalisées, allant de l’exploration des données à l’étude des gènes différentiellement exprimés, ont permis de montrer une vision cohérente des différences transcriptionnelles entre les trois groupes étudiés.
+
+Dans un premier temps, les analyses exploratoires, ont permis d’observer une structuration nette des échantillons. Les groupes 2 et 3 apparaissent proches l’un de l’autre, tandis que le groupe 1 se distingue clairement. Cette première observation suggérait déjà une divergence majeure entre le groupe 1 et les deux autres, ainsi qu'une relative similarité entre les groupes 2 et 3.
+
+Ces tendances ont été confirmées par l’analyse différentielle de l’expression génique. Les conditions 1v2 et 1v3 présentent un nombre élevé et comparable de gènes différentiellement exprimés (7992 et 7423 gènes), tandis que la condition 2v3 ne révèle qu’un faible nombre de gènes différentiellement exprimés (157). Cette différence importante montre une forte différence transcriptionnelle entre le groupe 1 et les groupes 2/3, et une ressamblance transcriptionnelle importante entre ces deux derniers.
+
+L’analyse fonctionnelle des gènes les plus différentiellement exprimés a mis en évidence des profils biologiques distincts selon les comparaisons.
+En effet, entre le groupe 1 et les groupes 2/3, les gènes impliqués dans la réponse immunitaire et les processus inflammatoires (tels que Il7r, Trem2, Il1rn ou Lat2) sont majoritairement sous-exprimés dans le groupe 1 ou sur-exprimés dans les groupes 2 et 3 traduisant soit une inactivation de l'activité immunitaire du premier groupe soit une suractivation des réponses lié à l'immunité des deux autres groupes. 
+
+En revanche, la comparaison 2v3 met principalement en évidence des gènes liés au métabolisme (tels que Scd1, Scd2, Elovl6, Lss ou Dhcr7), suggérant des ajustements métaboliques entre ces deux groupes plutôt que des différences majeures  immunitaire.
+
+Les heatmaps renforcent ces résultats. Celles des conditions 1v2 et 1v3 présentent des profils d’expression opposés entre les groupes, montrant la forte divergence transcriptionnelle du groupe 1. À l’inverse, la heatmap de la comparaison 2v3 montre une expression globalement homogène, avec quelques différences localisées, confirmant la proximité entre ces deux groupes.
+
+Dans l’ensemble, ces résultats suggèrent que le groupe 1 se distingue par une signature transcriptionnelle spécifique, marquée par une expression des gènes liés à l’immunité faible. Tandis que les groupes 2 et 3 partagent un profil transcriptionnel globalement similaire, mais présentent quelques différences métaboliques.
+
+
+
+
+## Perspectives
+Plusieurs pistes d’approfondissement pourraient être envisagées pour compléter cette analyse d’expression différentielle.
+
+Tout d’abord, le choix d’exclure certains échantillons considérés comme « outliers » a permis d’obtenir des groupes plus homogènes et des résultats plus robustes. Cependant, cette approche peut aussi avoir été trop restrictive, entraînant la perte d’une partie de la variabilité biologique naturelle. Il serait donc intéressant, dans une analyse complémentaire, d'avoir une attitude moins extrème et de peut être accépter plus d'échantillons.
+
+Ensuite, l’interprétation biologique s’est concentrée sur les 10 gènes les plus significativement différentiellement exprimés pour chaque condition. Bien que ces gènes soient informatifs, une analyse élargie à un plus grand nombre de gènes permettrait surement d'obtenir une vision plus global des réel différences entre les groupes. L’utilisation d’outils d’enrichissement fonctionnel, tels que GO ou KEGG, pourrait également permettre de mieux comprendre les processus moléculaires impliqués.
+
+Enfin, l’observation des heatmaps a mis en évidence plusieurs groupes de gènes co-régulés. Une analyse approfondie pourrait être fait pour en apprendre d'avantage sur ces co-régulations.
+
+Ces analyses complémentaires pourrait contribuer à mieux caractériser les mécanismes responsables des différences observées entre les groupes.
+
+
+
+
+ 
 
