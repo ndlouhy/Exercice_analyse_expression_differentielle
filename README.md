@@ -13,6 +13,22 @@ L'objectif de l’analyse est double. Dans un premier temps, il faut déterminer
 
 ## Analyse
 
+### Installation des packages
+
+```
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+# Packages CRAN
+cran_packages <- c("ggplot2", "ggbeeswarm", "pheatmap", "ggrepel", "gplots", "RColorBrewer")
+install.packages(setdiff(cran_packages, rownames(installed.packages())))
+
+# Packages Bioconductor
+bioc_packages <- c("edgeR", "DESeq2", "genefilter", "NMF")
+BiocManager::install(setdiff(bioc_packages, rownames(installed.packages())))
+
+```
+
 ### Import du jeu de données
 
 La première étape consiste à importer le jeu de données contenant les comptages de lectures par gène et par échantillon.
@@ -22,7 +38,7 @@ file_path <- "data/gene_count.xls"
 data_file <- read.table(file_path, header = T, sep = "\t")
 ```
 
-Description :
+### Description :
 
 Le fichier contient 33 808 lignes (correspondant à des gènes) et 35 colonnes (informations d’expression et d’annotation).
 
