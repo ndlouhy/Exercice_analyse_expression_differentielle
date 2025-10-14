@@ -451,7 +451,7 @@ Le tableau ci-dessous présente les 10 gènes les plus significativement différ
 | 10 | ENSMUSG00000026358 | Rgs1      | 2075.0277   | -6.489050      | 0.22175808 | -29.26184  | 3.174184e-188 | 6.917817e-185 |
 
 On observe que tous les log2FoldChange sont négatifs, montrant que ces gènes sont moins exprimés dans le Groupe 1 et donc plus exprimés dans le Groupe 2.
-Autrement dit, il s’agit soit d’une sous-expression dans le groupe 1, soit d’une sur-expression dans le groupe 2.
+Autrement dit, il s’agit soit d’une sous-expression relative dans le groupe 1, soit d’une sur-expression dans le groupe 2.
 
 Les valeurs extrêmement faibles de padj traduisent une forte confiance statistique dans la détection de ces différences d’expression.
 
@@ -473,13 +473,21 @@ Afin d’obtenir une vue d’ensemble, les 10 gènes les plus différentiellemen
 | 9        | Nceh1          | Itgax          | Acss2          |
 | 10       | Rgs1           | Nceh1          | Dhcr7          |
 
-On remarque une forte similarité entre les conditions 1v2 et 1v3 : sur les 10 gènes les plus différentiellement exprimés, 8 sont communs.
+On remarque une forte similarité entre les conditions 1v2 et 1v3. En effet, sur les 10 gènes les plus différentiellement exprimés, 8 sont communs.
 Seuls Slc37a2 (spécifique à 1v2) et Itgax (spécifique à 1v3) diffèrent.
-En revanche, la comparaison 2v3 met en évidence un ensemble de gènes totalement distinct, suggérant un profil d’expression spécifique à ces groupes.
+En revanche, la condition 2v3 met en évidence un ensemble de gènes très différents, suggérant que les groupes 2 et 3 montrent une différences commune avec les groupe 1 mais qu'ils possèdent des différences spécifiques entre eux.
 
-### Identifiaction de la fonction des gènes
 
-A présent je me suis intéressé à la fonction des gènes les plus différentiellemet exprimés entre les conditions 1v2 et 1v3 :
+On observe une forte similarité entre les conditions 1v2 et 1v3. En effet, parmi les 10 gènes les plus différentiellement exprimés, 8 sont communs.
+Seuls Slc37a2 (spécifique à 1v2) et Itgax (spécifique à 1v3) diffèrent.
+En revanche, la condition 2v3 révèle un ensemble de gènes totalement différents, suggérant que les Groupes 2 et 3 partagent un profil d’expression similaire par rapport au Groupe 1, mais présentent également des différences transcriptionnelles spécifiques entre eux.
+
+
+### Interprétation fonctionnelle des gènes différentiellement exprimés.
+
+#### Comparaison conditions 1v2 et 1v3.
+
+Les fonctions des gènes les plus différentiellemet exprimés dans les conditions 1v2 et 1v3 sont les suivantes :
 
 Il7r : interleukin 7 receptor.\
 Trem2 : triggering receptor expressed on myeloid cells 2.\
@@ -493,12 +501,15 @@ Rgs1 : regulator of G-protein signaling 1.\
 Itgax : integrin alpha X.\
 Slc37a2 : solute carrier family 37.
 
-On observe que sur les 10 gènes, 5 sont impliqué dans la réponse immunitaire et les processus inflammatoires. Sachant qu'ils sont moins exprimés dans le groupe 1 cela pour nous faire penser que ce groupe possède une inhibition dans ces fonctions.
+On observe que sur les 10 gènes, 4 sont impliqué dans la réponse immunitaire et les processus inflammatoires (Il7r, Trem2, Lat2, Il1rn). 
 
-L’analyse différentielle met en évidence un ensemble de gènes principalement impliqués dans la réponse immunitaire et les processus inflammatoires.
-Les gènes tels que Il7r, Il1rn, Lat2 et Trem2 sont associés à la signalisation et à la régulation des cellules immunitaires, notamment les lymphocytes T et les cellules myéloïdes.
+L’analyse d'expression différentielle met en évidence un ensemble de gènes principalement impliqués dans la réponse immunitaire et les processus inflammatoires. En effet, parmis les 10 gènes présentés, les gènes Il7r, Il1rn, Lat2 et Trem2 sont associés à ces fonctions.
 
-Quand on regarde les 10 gènes les plus différentiellement exprimés entre les conditions
+Cette différence d'expression entre les groupes pourrait soit nous faire penser à une condition expérimentale impliquant une inhibition des gènes lié à l'immunité dans le groupe 1 soit que les goupes 2 et 3 sont soumis à une condtion expérimentale entrainant un état d'activation immunitaire.
+
+
+#### Comparaison condition 2v3.
+Les fonction des gènes les plus différentiellemet exprimés dans la condition 2v3 sont les suivantes :
 
 Ppp2r5b : protein phosphatase 2, regulatory subunit B
 Elovl6 : ELOVL family member 6, elongation of long chain fatty acids (yeast)
@@ -511,7 +522,11 @@ Lpcat3 : lysophosphatidylcholine acyltransferase 3
 Acss2 : acyl-CoA synthetase short-chain family member 2
 Dhcr7 : 7-dehydrocholesterol reductase
 
-Les top 10 gènes les plus différentiellement exprimé entre les conditions sont des gènes impliqués dans régulation du métabolisme lipidique et du cholestérol.
+Contrairement aux comparaison impliquant le groupe 1, aucun gène immunitaire n'apparait dans la liste.
+Les fonctions majoritaire retrouvés parmis cette liste de gènes est principalement impliqué dans régulation du métabolisme lipidique et du cholestérol.
+
+Ces résultats suggèrent que les groupes 2 et 3 se différencient principalement par leur profile métabolitique et non pas par des différences immunitaire.
+Cela pourrait traduire une différence d’état physiologique comme par exemple des types cellulaire ou des état condition métaboliques différentes.
 
 
 ### Heatmaps
@@ -521,6 +536,8 @@ Les top 10 gènes les plus différentiellement exprimé entre les conditions son
   <img src="Results/Heatmaps/Heatmap1v3.png" width="400"/>
   <img src="Results/Heatmaps/Heatmap2v3.png" width="400"/>
 </p>
+
+On remarque des profils d'expression très similaire entre les goupes 2 et 3.
 
 ## Conclusion
  Pour conclure 
