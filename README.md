@@ -518,17 +518,20 @@ En revanche, la condition 2v3 révèle un ensemble de gènes totalement différe
 
 Les fonctions des gènes les plus différentiellemet exprimés dans les conditions 1v2 et 1v3 sont les suivantes :
 
-Il7r : interleukin 7 receptor.\
-Trem2 : triggering receptor expressed on myeloid cells 2.\
-Arhgap25 : Rho GTPase activating protein 25.\
-Ubd : ubiquitin D.\
-Il1rn : interleukin 1 receptor antagonist.\
-Adam8 : a disintegrin and metallopeptidase domain 8.\
-Lat2 : linker for activation of T cells family, member 2.\
-Nceh1 : neutral cholesterol ester hydrolase 1.\
-Rgs1 : regulator of G-protein signaling 1.\
-Itgax : integrin alpha X.\
-Slc37a2 : solute carrier family 37.
+| Gène     | Description                                                      |
+|----------|------------------------------------------------------------------|
+| Il7r     | interleukin 7 receptor.                                          |
+| Trem2    | triggering receptor expressed on myeloid cells 2.               |
+| Arhgap25 | Rho GTPase activating protein 25.                                |
+| Ubd      | ubiquitin D.                                                     |
+| Il1rn    | interleukin 1 receptor antagonist.                               |
+| Adam8    | a disintegrin and metallopeptidase domain 8.                     |
+| Lat2     | linker for activation of T cells family, member 2.              |
+| Nceh1    | neutral cholesterol ester hydrolase 1.                           |
+| Rgs1     | regulator of G-protein signaling 1.                              |
+| Itgax    | integrin alpha X.                                                |
+| Slc37a2  | solute carrier family 37.                                        |
+
 
 On observe que sur les 10 gènes, 4 sont impliqué dans la réponse immunitaire et les processus inflammatoires (Il7r, Trem2, Lat2, Il1rn). 
 
@@ -540,16 +543,19 @@ Cette différence d'expression entre les groupes pourrait soit nous faire penser
 #### Comparaison condition 2v3.
 Les fonction des gènes les plus différentiellemet exprimés dans la condition 2v3 sont les suivantes :
 
-Ppp2r5b : protein phosphatase 2, regulatory subunit B.\
-Elovl6 : ELOVL family member 6, elongation of long chain fatty acids (yeast).\
-Scd2 : stearoyl-Coenzyme A desaturase 2.\
-Scd1 : stearoyl-Coenzyme A desaturase 1.\
-Lss : lanosterol synthase.\
-Fam78b : family with sequence similarity 78, member B.\
-Spry3 : sprouty RTK signaling antagonist 3.\
-Lpcat3 : lysophosphatidylcholine acyltransferase 3.\
-Acss2 : acyl-CoA synthetase short-chain family member 2.\
-Dhcr7 : 7-dehydrocholesterol reductase.
+| Gène     | Description                                                                                     |
+|----------|-------------------------------------------------------------------------------------------------|
+| Ppp2r5b  | protein phosphatase 2, regulatory subunit B.                                                   |
+| Elovl6   | ELOVL family member 6, elongation of long chain fatty acids (yeast).                           |
+| Scd2     | stearoyl-Coenzyme A desaturase 2.                                                              |
+| Scd1     | stearoyl-Coenzyme A desaturase 1.                                                              |
+| Lss      | lanosterol synthase.                                                                           |
+| Fam78b   | family with sequence similarity 78, member B.                                                  |
+| Spry3    | sprouty RTK signaling antagonist 3.                                                           |
+| Lpcat3   | lysophosphatidylcholine acyltransferase 3.                                                    |
+| Acss2    | acyl-CoA synthetase short-chain family member 2.                                              |
+| Dhcr7    | 7-dehydrocholesterol reductase.                                                              |
+
 
 Contrairement aux comparaison impliquant le groupe 1, aucun gène immunitaire n'apparait dans la liste.
 Les fonctions majoritaire retrouvés parmis cette liste de gènes est principalement impliqué dans régulation du métabolisme lipidique et du cholestérol.
