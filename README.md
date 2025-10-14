@@ -511,16 +511,16 @@ Cette différence d'expression entre les groupes pourrait soit nous faire penser
 #### Comparaison condition 2v3.
 Les fonction des gènes les plus différentiellemet exprimés dans la condition 2v3 sont les suivantes :
 
-Ppp2r5b : protein phosphatase 2, regulatory subunit B
-Elovl6 : ELOVL family member 6, elongation of long chain fatty acids (yeast)
-Scd2 : stearoyl-Coenzyme A desaturase 2
-Scd1 : stearoyl-Coenzyme A desaturase 1
-Lss : lanosterol synthase
-Fam78b : family with sequence similarity 78, member B
-Spry3 : sprouty RTK signaling antagonist 3
-Lpcat3 : lysophosphatidylcholine acyltransferase 3
-Acss2 : acyl-CoA synthetase short-chain family member 2
-Dhcr7 : 7-dehydrocholesterol reductase
+Ppp2r5b : protein phosphatase 2, regulatory subunit B.\
+Elovl6 : ELOVL family member 6, elongation of long chain fatty acids (yeast).\
+Scd2 : stearoyl-Coenzyme A desaturase 2.\
+Scd1 : stearoyl-Coenzyme A desaturase 1.\
+Lss : lanosterol synthase.\
+Fam78b : family with sequence similarity 78, member B.\
+Spry3 : sprouty RTK signaling antagonist 3.\
+Lpcat3 : lysophosphatidylcholine acyltransferase 3.\
+Acss2 : acyl-CoA synthetase short-chain family member 2.\
+Dhcr7 : 7-dehydrocholesterol reductase.\
 
 Contrairement aux comparaison impliquant le groupe 1, aucun gène immunitaire n'apparait dans la liste.
 Les fonctions majoritaire retrouvés parmis cette liste de gènes est principalement impliqué dans régulation du métabolisme lipidique et du cholestérol.
