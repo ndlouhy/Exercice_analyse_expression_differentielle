@@ -64,11 +64,11 @@ Le jeu de données complet est disponible dans le dossier Data/.
 
 Pour réaliser une analyse d’expression différentielle, deux types de fichiers sont indispensables :
 
-1. Un fichier de comptages — contenant les valeurs brutes de lecture (nombre de reads alignés par gène et par échantillon).
+1. Un fichier de comptages contenant les valeurs brutes de lecture (nombre de reads alignés par gène et par échantillon).
 
-2. Un fichier de métadonnées (metadata) — décrivant les informations expérimentales associées à chaque échantillon (conditions biologiques, groupes expérimentaux, etc.).
+2. Un fichier de métadonnées (metadata) décrivant les informations expérimentales associées à chaque échantillon (conditions biologiques, groupes expérimentaux, etc.).
 
-Avec notre jeu de données, nous allons pouvoir créer en plus un fichier d’annotation des gènes contenant leurs descriptions fonctionnelles, ce qui facilitera l’interprétation biologique des résultats.
+Avec notre jeu de données, un fichier supplémentaire a pu être créer. Il s'agit d'un fichier d’annotation contenant les descriptions fonctionnelles des gènes, ce qui facilitera l’interprétation biologique des résultats.
 
 ```
 ### -----------------------
@@ -109,7 +109,7 @@ meta <- data.frame(
 genes_description <- data_file[, !grepl("^Sample_", colnames(data_file))]
 
 ```
-À l’issue de cette étape, nous obtenons trois objets principaux :
+À l’issue de cette étape, nous obtenons trois fichiers :
 
 - **ReadCount** : la matrice des comptages bruts par gène et par échantillon ;
 
@@ -117,7 +117,7 @@ genes_description <- data_file[, !grepl("^Sample_", colnames(data_file))]
 
 - **genes_description** : le tableau des informations fonctionnelles sur les gènes.
 
-Ces fichiers sont disponibles dans le dossier Data/ et serviront de base à toutes les étapes suivantes de l’analyse
+Ces fichiers sont disponibles dans le dossier Data/ et serviront de base à toutes les étapes de l’analyse
 
 ### Etapes de filtres des données.
 #### Suppression des gènes non exprimés
@@ -143,7 +143,7 @@ ReadCount <- ReadCount[rowSums(ReadCount) > 0, ]
 # Vérification
 table(rowSums(ReadCount) == 0)
 ```
-Dans notre cas, aucun gène n’était totalement non exprimé, donc aucun n’a été supprimé à cette étape.
+Dans notre cas, aucun gène n’était non exprimé dans aucune librairie, donc aucun n’a été supprimé à cette étape.
 
 #### Filtrage basé sur le CPM (Counts Per Million)
 
@@ -153,7 +153,7 @@ Cette approche tient compte de la profondeur de séquençage de chaque librairie
 Le CPM se calcul en divisant le nombre de lectures mappant pour un gène d'une librairie par le nombre de lecture total de la librairie multiplié par 1 million.
 J'ai choisi un seuil arbitraire de 10 CPM. Seuls les gènes suppérieur à ce seuil dans au moins 2 librairies sont conservés.
 
-J'ai choisi de travailler avec la méthode des CPM car c'est une méthode souvent la méthode standard de filtration lors d'une analyse différentielle.
+J'ai choisi de travailler avec la méthode des CPM car c'est la méthode standard de filtration lors d'une analyse différentielle.
 
 ```
 # Défiition du seuil à 10 cpm
@@ -166,7 +166,7 @@ keep <- rowSums(cpm(ReadCount)>cutoff[1]) >= 2
 ReadCount <- ReadCount[keep,]
 ```
 
-À l’issue de ces étapes de filtrage, le jeu de données passe de 33 808 gènes à 22 050 gènes. Ainsi 11758 gènes ont été supprimés car ils présentaient des niveaux d’expression trop faibles pour être statistiquement exploitables.
+À l’issue de ces étapes de filtrage, le jeu de données passe de 33 808 gènes à 22 050 gènes. Les 11758 gènes supprimés présentaient des niveaux d’expression trop faibles pour être statistiquement exploitables.
 
 ### Création de l'objet DESeq et normalisations.
 
@@ -213,15 +213,14 @@ rld <- rlog(DESeq.ds, blind = FALSE)
 rlog.norm.counts <- assay(rld)
 
 ```
-L’objet rld contient les valeurs normalisées et transformées, prêtes à être utilisées pour les analyses exploratoires telles que la PCA, les dendrogrammes ou les heatmaps.
-Les données extraites via assay(rld) (rlog.norm.counts) représentent une version stabilisée et comparable des comptages d’origine.
+L’objet rld contient les valeurs normalisées et transformées, prêtes à être utilisées pour les analyses exploratoires.
 
 ### Analyses exploiratoires
 #### ACP
 
 L’analyse en composantes principales (ACP) est une méthode exploratoire permettant de résumer la variance présente dans les données et ainsi y visualiser la structure globale.
 
-L’objectif de cette approche ex ploratoire est d’évaluer si les échantillons se regroupent par condition expérimentale (clustering cohérent par groupe), s’il existe des outliers (échantillons atypiques) et enfin si une séparation claire entre groupes est observable, suggérant une variabilité biologique.
+L’objectif de cette approche exploratoire est d’évaluer si les échantillons se regroupent par condition expérimentale (clustering cohérent par groupe), s’il existe des outliers (échantillons atypiques) et enfin si une séparation claire entre groupes est observable, suggérant une variabilité biologique.
 
 La détection des outliers est primordiale car ils introduisent une variance non biologique, souvent liée à des effets techniques (effet de batch, qualité de séquençage, préparation d’échantillon, etc.).
 Les identifier à ce stade est donc essentiel pour éviter qu’ils ne biaisent l’analyse différentielle.
@@ -258,8 +257,8 @@ Ces observations confirment la pertinence de la comparaison du groupe 1 contre l
 L’analyse du dendrogramme permet d’obtenir une vision hiérarchique de la structure topologique du jeu de données.
 Ce graphique illustre les similarités globales entre les échantillons en se basant sur leurs profils d’expression génique, et complète donc l’analyse réalisée par l’ACP.
 
-Dans un premier temps, j’ai calculé une matrice de corrélation entre tous les échantillons à partir des comptages normalisés (rlog.norm.counts).
-Chaque valeur de corrélation mesure la similarité des profils d’expression entre deux échantillons. Deux échantillons ayant un profil d’expression similaire présentent une corrélation élevée, tandis que des échantillons très différents auront une corrélation faible ou négative.
+Dans un premier temps, j’ai calculé une matrice de corrélation entre tous les échantillons à partir des comptages normalisés.
+Chaque valeur de corrélation mesure la similarité des profils d’expression entre deux échantillons. Deux échantillons ayant un profil d’expression similaire présentent une corrélation élevée, tandis que des échantillons très différents auront une corrélation faible.
 
 À partir de cette matrice de corrélation, on calcule ensuite une matrice de distance utilisée pour la classification hiérarchique.
 La distance est définie ici comme 1 - corrélation, ce qui signifie que plus deux échantillons sont corrélés, plus leur distance est faible.
@@ -276,7 +275,7 @@ On retrouve une séparation entre le groupe 1 et les groupes 2 et 3, ces deux de
 
 Cependant, plusieurs outliers apparaissent clairement. En effet, l’échantillon 3 est très éloigné des autres échantillons du groupe 1, l’échantillon 12 s’écarte également du groupe 2, tandis que les échantillons 2 et 7 du groupe 1 se situent en périphérie de leur cluster.
 
-Pour la suite de l’analyse, j’ai donc pris la décision de retirer les échantillons 2, 3, 7 et 12.
+Pour la suite de l’analyse, j’ai pris la décision de retirer les échantillons 2, 3, 7 et 12.
 Après cette filtration, le groupe 1 conserve 5 réplicats, ce qui reste suffisant pour représenter de manière fiable la variabilité intra-groupe.
 ```
 distance.m_rlog  <- as.dist(1 - cor(rlog.norm.counts , method = "pearson" ))
@@ -355,15 +354,19 @@ results.DESeq2_2v3 <- DGE.results_2v3
 
 ![MA_plots](Plots/MAplots_allGroups.png)
 
+**Explication MAPlots**
+
 ### Création des tableaux de résultats
 
 A présent, nous arrivons à la dernière étape de notre analyse, la génération des tableaux de résultats présentant les gènes différentiellement exprimés pour chaque condition.
-Le code ci-dessous présente le déroulé pour la comparaison entre le Groupe 1 et le Groupe 2, mais les mêmes étapes ont été réalisées pour les autres comparaisons.
+
+je définis une condtion, la comparaison entre de l'expression différentielle entre deux groupes. La condition 1v2, représente la comparasion entre le groupe 1 et 2, La condition 1v3 et la comparaison du groupe 1 avec le groupe 3 et la condition 2v3 est la comparaison du groupe 2 avec le groupe3.
+
+Le code ci-dessous présente le déroulé pour la comparaison entre le Groupe 1 et le Groupe 2, les mêmes étapes ont été réalisées pour les autres comparaisons.
 
 Afin d’obtenir uniquement les gènes présentant les différences d’expression avec la plus forte confiance, j’ai fixé un seuil de significativité (α) à 0.001.
 Ainsi, seuls les gènes dont la p-value ajustée (padj) est inférieure à ce seuil sont considérés comme significativement différentiellement exprimés.
 
-**Explication création des condition 1v2, 1v3, 2v3**
 
 ```
 # Définition de la valeur du risque alpha
@@ -448,10 +451,16 @@ if (nrow(DE_rlog_matrix_1v2) > 1) {
 ```
 
 
-
 ## Résultats
 
 ### Tableaux des gènes différentiellement exprimés.
+
+
+| #                                           | Condition 1v2 | Condition 1v3 | Condition 2v3 |
+|---------------------------------------------|---------------|---------------|---------------|
+|Nombre de gènes différentiellements exprimés | 7992          | 7423          | 157           |
+
+
 
 ```
 > dim(DESeq_table_1v2)
