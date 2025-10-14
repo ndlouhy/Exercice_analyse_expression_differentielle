@@ -456,22 +456,14 @@ if (nrow(DE_rlog_matrix_1v2) > 1) {
 ### Tableaux des gènes différentiellement exprimés.
 
 
-| #                                           | Condition 1v2 | Condition 1v3 | Condition 2v3 |
+|                                             | Condition 1v2 | Condition 1v3 | Condition 2v3 |
 |---------------------------------------------|---------------|---------------|---------------|
 |Nombre de gènes différentiellements exprimés | 7992          | 7423          | 157           |
 
 
+On observe que le nombre de gènes différentiellement exprimé entre les conditions n'est pas homogène entre les conditions. Les condition 1v2 et 1v3 partagent un nombre de gènes différentiellement exprimé relativement proche contrairement à la condition 2v3 qui possède un nombre très restreint.
+Ce résultat nous laisse penser à une similarité entre les groupes 2 et 3, car peut de gènes s'expriment différement. La ou le groupe 1 semble très différent avec beaucoup plus de gènes différentiellemtn exprimés.
 
-```
-> dim(DESeq_table_1v2)
-[1] 7992    8
-> dim(DESeq_table_1v3)
-[1] 7423    8
-> dim(DESeq_table_2v3)
-[1] 157   8
-```
-Pour la condition 1v2, on trouve 7992 gènes différentiellement exprimés, 7423 pour la condition 1v3 et 157 pour la condition 2v3.
-**Explication diff de DE par condition**
 
 Le tableau ci-dessous présente les 10 gènes les plus significativement différentiellement exprimés entre le Groupe 1 et le Groupe 2 :
 
@@ -530,12 +522,12 @@ Les fonctions des gènes les plus différentiellemet exprimés dans les conditio
 | Gène     | Description                                                      |
 |----------|------------------------------------------------------------------|
 | Il7r     | interleukin 7 receptor.                                          |
-| Trem2    | triggering receptor expressed on myeloid cells 2.               |
+| Trem2    | triggering receptor expressed on myeloid cells 2.                |
 | Arhgap25 | Rho GTPase activating protein 25.                                |
 | Ubd      | ubiquitin D.                                                     |
 | Il1rn    | interleukin 1 receptor antagonist.                               |
 | Adam8    | a disintegrin and metallopeptidase domain 8.                     |
-| Lat2     | linker for activation of T cells family, member 2.              |
+| Lat2     | linker for activation of T cells family, member 2.               |
 | Nceh1    | neutral cholesterol ester hydrolase 1.                           |
 | Rgs1     | regulator of G-protein signaling 1.                              |
 | Itgax    | integrin alpha X.                                                |
@@ -546,24 +538,24 @@ On observe que sur les 10 gènes, 4 sont impliqué dans la réponse immunitaire 
 
 L’analyse d'expression différentielle met en évidence un ensemble de gènes principalement impliqués dans la réponse immunitaire et les processus inflammatoires. En effet, parmis les 10 gènes présentés, les gènes Il7r, Il1rn, Lat2 et Trem2 sont associés à ces fonctions.
 
-Cette différence d'expression entre les groupes pourrait soit nous faire penser à une condition expérimentale impliquant une inhibition des gènes lié à l'immunité dans le groupe 1 soit que les goupes 2 et 3 sont soumis à une condtion expérimentale entrainant un état d'activation immunitaire.
+Cette différence d'expression entre les groupes pourrait soit nous faire penser soit à une condition expérimentale impliquant une inhibition des gènes lié à l'immunité dans le groupe 1 soit que les goupes 2 et 3 sont soumis à une condtion expérimentale entrainant un état d'activation immunitaire.
 
 
 #### Comparaison condition 2v3.
 Les fonction des gènes les plus différentiellemet exprimés dans la condition 2v3 sont les suivantes :
 
-| Gène     | Description                                                                                     |
-|----------|-------------------------------------------------------------------------------------------------|
+| Gène     | Description                                                                                    |
+|----------|------------------------------------------------------------------------------------------------|
 | Ppp2r5b  | protein phosphatase 2, regulatory subunit B.                                                   |
 | Elovl6   | ELOVL family member 6, elongation of long chain fatty acids (yeast).                           |
 | Scd2     | stearoyl-Coenzyme A desaturase 2.                                                              |
 | Scd1     | stearoyl-Coenzyme A desaturase 1.                                                              |
 | Lss      | lanosterol synthase.                                                                           |
 | Fam78b   | family with sequence similarity 78, member B.                                                  |
-| Spry3    | sprouty RTK signaling antagonist 3.                                                           |
-| Lpcat3   | lysophosphatidylcholine acyltransferase 3.                                                    |
-| Acss2    | acyl-CoA synthetase short-chain family member 2.                                              |
-| Dhcr7    | 7-dehydrocholesterol reductase.                                                              |
+| Spry3    | sprouty RTK signaling antagonist 3.                                                            |
+| Lpcat3   | lysophosphatidylcholine acyltransferase 3.                                                     |
+| Acss2    | acyl-CoA synthetase short-chain family member 2.                                               |
+| Dhcr7    | 7-dehydrocholesterol reductase.                                                                |
 
 
 Contrairement aux comparaison impliquant le groupe 1, aucun gène immunitaire n'apparait dans la liste.
