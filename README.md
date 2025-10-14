@@ -347,6 +347,8 @@ Le code ci-dessous présente le déroulé pour la comparaison entre le Groupe 1 
 Afin d’obtenir uniquement les gènes présentant les différences d’expression avec la plus forte confiance, j’ai fixé un seuil de significativité (α) à 0.001.
 Ainsi, seuls les gènes dont la p-value ajustée (padj) est inférieure à ce seuil sont considérés comme significativement différentiellement exprimés.
 
+**Explication création des condition 1v2, 1v3, 2v3**
+
 ```
 # Définition de la valeur du risque alpha
 alpharisk <- 0.001
@@ -435,6 +437,17 @@ if (nrow(DE_rlog_matrix_1v2) > 1) {
 
 ### Tableaux des gènes différentiellement exprimés.
 
+```
+> dim(DESeq_table_1v2)
+[1] 7992    8
+> dim(DESeq_table_1v3)
+[1] 7423    8
+> dim(DESeq_table_2v3)
+[1] 157   8
+```
+Pour la condition 1v2, on trouve 7992 gènes différentiellement exprimés, 7423 pour la condition 1v3 et 157 pour la condition 2v3.
+**Explication diff de DE par condition**
+
 Le tableau ci-dessous présente les 10 gènes les plus significativement différentiellement exprimés entre le Groupe 1 et le Groupe 2 :
 
 | #  | Geneid             | GeneName | baseMean   | log2FoldChange | lfcSE     | stat       | pvalue        | padj          |
@@ -520,7 +533,7 @@ Fam78b : family with sequence similarity 78, member B.\
 Spry3 : sprouty RTK signaling antagonist 3.\
 Lpcat3 : lysophosphatidylcholine acyltransferase 3.\
 Acss2 : acyl-CoA synthetase short-chain family member 2.\
-Dhcr7 : 7-dehydrocholesterol reductase.\
+Dhcr7 : 7-dehydrocholesterol reductase.
 
 Contrairement aux comparaison impliquant le groupe 1, aucun gène immunitaire n'apparait dans la liste.
 Les fonctions majoritaire retrouvés parmis cette liste de gènes est principalement impliqué dans régulation du métabolisme lipidique et du cholestérol.
@@ -537,7 +550,13 @@ Cela pourrait traduire une différence d’état physiologique comme par exemple
   <img src="Results/Heatmaps/Heatmap2v3.png" width="400"/>
 </p>
 
-On remarque des profils d'expression très similaire entre les goupes 2 et 3.
+En observant les heatmpas, on remarque qu'elles sont similaire entre les condition 1v2 et 1v3.
+
+Pour ces deux conditions on observe une oppostion dans l'expression des gènes entre les conditions. Des groupes de gènes sous exprimé dans une condition se retrouve sur exprimé dans la seconde. On peut dire qu'il y a un changement dans l'expression des gènes suivant les conditions. De plus cette différence de profil d'expression est bien marquée suivant les conditions, traduiant des profils d'expression bien distinct.
+
+Un autre point que l'on observe est que les gènes sont différenciellement exprimé par bloc montrant qu'il y a une co-régulation de ces gènes. Les motifs indiquent donc qu'ils sont co-régulé différentiellement entre les conditions.
+
+La heatmap décrivant la condition 2v3 montre un différentiel d'expression entre le groupe 2 et 3 mais de manière moins clair.
 
 ## Conclusion
  Pour conclure 
