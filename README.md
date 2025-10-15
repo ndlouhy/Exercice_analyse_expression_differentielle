@@ -225,7 +225,7 @@ L’objectif de cette approche exploratoire est d’évaluer si les échantillon
 La détection des outliers est primordiale car ils introduisent une variance non biologique, souvent liée à des effets techniques (effet de batch, qualité de séquençage, préparation d’échantillon, etc.).
 Les identifier à ce stade est donc essentiel pour éviter qu’ils ne biaisent l’analyse différentielle.
 
-Enfin, observer la structure globale des données est une étape importante. En effet, si les échantillons de groupes distincts ne se séparent pas sur les axes principaux, cela suggère une faible variance intergroupe, et donc un faible potentiel de détection de gènes différentiellement exprimés.
+Enfin, observer la structure globale des données est une étape importante. En effet, si les échantillons de groupes distincts ne se séparent pas sur les axes principaux, cela suggère une faible variance intergroupe, et qu'il n'existe pas de différence génique entre les groupes.
 
 ```
 pcaData <- plotPCA(rld, intgroup = "group", returnData = TRUE)
