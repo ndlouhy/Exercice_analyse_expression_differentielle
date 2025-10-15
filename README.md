@@ -318,6 +318,17 @@ On remarque qu'on a bien enlevé les outliers, le jeu de données est plus struc
 
 ## Analyse d'expression diffférentielle avec DESeq2.
 
+L’analyse d’expression différentielle est réalisée à l’aide du package DESeq2, qui compare les niveaux d’expression génique entre plusieurs groupes expérimentaux.
+DESeq2 commence par normaliser les comptages afin de corriger les différences de profondeur de séquençage entre échantillons.
+Il modélise ensuite les données à l’aide d’un modèle statistique basé sur la loi binomiale négative, qui tient compte de la variance liée à chaque gène.
+
+Pour chaque comparaison (ou condition, comme 1v2, 1v3 ou 2v3), DESeq2 calcule :
+
+- log2FoldChange : le rapport d’expression entre les deux groupes,
+
+- valeur p (pvalue) testant la significativité de cette différence,
+
+- p-value ajustée (padj) selon la méthode de Benjamini–Hochberg (FDR) pour corriger le risque de faux positifs liés aux tests multiples.
 
 Une condition correspond ici à la comparaison de l’expression génique entre deux groupes :
 
@@ -486,7 +497,7 @@ On observe que le nombre de gènes différentiellement exprimés varie fortement
 Les comparaisons 1v2 et 1v3 présentent un nombre de gènes différentiellement exprimés relativement proche, traduisant des profils transcriptionnels globalement similaires dans ces deux cas.
 En revanche, la comparaison 2v3 ne met en évidence qu’un nombre très restreint de gènes régulés, suggérant une forte similarité entre les groupes 2 et 3.
 
-Ainsi, le groupe 1 se distingue nettement des deux autres groupes, tandis que les groupes 2 et 3 apparaissent beaucoup plus proches sur le plan de l’expression génique.
+Ainsi, le groupe 1 se distingue nettement des deux autres groupes, tandis que les groupes 2 et 3 apparaissent beaucoup plus proches sur le plan de l’expression génique. Ainsi on rejoint ce qui a été dit lors de l'analyse des MAplots.
 
 
 
