@@ -377,12 +377,12 @@ results.DESeq2_2v3 <- DGE.results_2v3
 
 Les MA-Plots permettent de visualiser la dispersion des gènes en fonction de leur niveau d’expression pour chaque condition comparée.
 L’axe des abscisses indique la moyenne d’expression normalisée entre les deux groupes, tandis que l’axe des ordonnées représente le rapport d’expression (log2FoldChange) entre ces groupes.
-Chaque point représente un gène ou les points bleus correspondent aux gènes identifiés comme différentiellement exprimés.
+Chaque point représente un gène où les points bleus correspondent aux gènes identifiés comme différentiellement exprimés.
 
 
 La forme en entonnoir observée traduit la dépendance de la variance au niveau d’expression.
 En effet, les gènes faiblement exprimés présentent une plus grande variabilité (bruit de comptage élevé), ce qui réduit la puissance statistique pour détecter une différence significative. Seules de très fortes variations d’expression seront repérées.
-À l’inverse, les gènes fortement exprimés génèrent des comptages plus stables et précis, permettant de détecter des différences même faibles — le pouvoir statistique y est donc plus élevé.
+À l’inverse, les gènes fortement exprimés génèrent des comptages plus stables et précis, permettant de détecter des différences même faibles, ainsi le pouvoir statistique y est donc plus élevé.
 
 En interprétant les graphiques, on constate que les conditions 1v2 et 1v3 présentent des profils similaires, avec un nombre important de gènes différentiellement exprimés.
 En revanche, la comparaison 2v3 montre très peu de gènes significativement différents.
@@ -613,7 +613,7 @@ En revanche, la heatmap correspondant à la condition 2v3 révèle des différen
 
 Les analyses réalisées, allant de l’exploration des données à l’étude des gènes différentiellement exprimés, ont permis de montrer une vision cohérente des différences transcriptionnelles entre les trois groupes étudiés.
 
-Dans un premier temps, les analyses exploratoires, ont permis d’observer une structuration nette des échantillons. Les groupes 2 et 3 apparaissent proches l’un de l’autre, tandis que le groupe 1 se distingue clairement. Cette première observation suggérait déjà une divergence majeure entre le groupe 1 et les deux autres, ainsi qu'une relative similarité entre les groupes 2 et 3.
+Dans un premier temps, les analyses exploratoires et les MAplots, ont permis d’observer une structuration nette des échantillons. Les groupes 2 et 3 apparaissent proches l’un de l’autre, tandis que le groupe 1 se distingue clairement. Cette première observation suggérait déjà une divergence majeure entre le groupe 1 et les deux autres, ainsi qu'une relative similarité entre les groupes 2 et 3.
 
 Ces tendances ont été confirmées par l’analyse différentielle de l’expression génique. Les conditions 1v2 et 1v3 présentent un nombre élevé et comparable de gènes différentiellement exprimés (7992 et 7423 gènes), tandis que la condition 2v3 ne révèle qu’un faible nombre de gènes différentiellement exprimés (157). Cette différence importante montre une forte différence transcriptionnelle entre le groupe 1 et les groupes 2/3, et une ressamblance transcriptionnelle importante entre ces deux derniers.
 
