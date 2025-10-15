@@ -1,4 +1,4 @@
-library("DESeq2")
+elibrary("DESeq2")
 library("ggplot2")
 library("NMF")
 library("ggbeeswarm")
@@ -38,8 +38,14 @@ meta <- data.frame(
 genes_description <- data_file[, !grepl("^Sample_", colnames(data_file))]
 
 ## Data filtering
-# Compte le nombre de gènes exprimé dans aucun éch
-table(rowSums(ReadCount)==0)
+#Comptage des gènes non exprimés dans aucun échantillon
+table(rowSums(ReadCount) == 0)
+
+# Suppression de ces gènes
+ReadCount <- ReadCount[rowSums(ReadCount) > 0, ]
+
+# Vérification
+table(rowSums(ReadCount) == 0)
 
 cutoff <- cpm(10, mean(colSums(ReadCount)))
 dim(ReadCount)
@@ -395,5 +401,6 @@ if (nrow(DE_rlog_matrix_2v3) > 1) {
 } else {
   cat("Aucun gène significatif pour Groupe 2 vs Groupe 3\n")
 }
+
 
 #dev.off()
