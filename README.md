@@ -354,7 +354,21 @@ results.DESeq2_2v3 <- DGE.results_2v3
 
 ![MA_plots](Plots/MAplots_allGroups.png)
 
-**Explication MAPlots**
+
+Les MA-Plots permettent de visualiser la dispersion des gènes en fonction de leur niveau d’expression pour chaque condition comparée.
+L’axe des abscisses indique la moyenne d’expression normalisée entre les deux groupes, tandis que l’axe des ordonnées représente le rapport d’expression (log2FoldChange) entre ces groupes.
+Chaque point représente un gène ou les points bleus correspondent aux gènes identifiés comme différentiellement exprimés.
+
+
+La forme en entonnoir observée traduit la dépendance de la variance au niveau d’expression.
+En effet, les gènes faiblement exprimés présentent une plus grande variabilité (bruit de comptage élevé), ce qui réduit la puissance statistique pour détecter une différence significative. Seules de très fortes variations d’expression seront repérées.
+À l’inverse, les gènes fortement exprimés génèrent des comptages plus stables et précis, permettant de détecter des différences même faibles — le pouvoir statistique y est donc plus élevé.
+
+En interprétant les graphiques, on constate que les conditions 1v2 et 1v3 présentent des profils similaires, avec un nombre important de gènes différentiellement exprimés.
+En revanche, la comparaison 2v3 montre très peu de gènes significativement différents.
+Cela suggère une forte similarité transcriptionnelle entre les groupes 2 et 3, tandis que le groupe 1 se distingue nettement par son profil d’expression.
+
+Ces observations sont cohérentes avec les analyses exploratoires (ACP et dendrogrammes) réalisées précédemment, qui montraient déjà un regroupement des échantillons 2 et 3 et une séparation marquée du groupe 1.
 
 ### Création des tableaux de résultats
 
