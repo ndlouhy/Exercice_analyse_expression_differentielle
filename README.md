@@ -170,7 +170,7 @@ ReadCount <- ReadCount[keep,]
 
 ### Création de l'objet DESeq et normalisations.
 
-#### Création de la matrice de design
+#### Création de l'objet DESeq2.
 
 Une fois les données de comptage filtrées, nous pouvons créer l’objet DESeqDataSet, qui servira de base lors de l’analyse avec DESeq2.
 
