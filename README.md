@@ -318,6 +318,15 @@ On remarque qu'on a bien enlevé les outliers, le jeu de données est plus struc
 
 ## Analyse d'expression diffférentielle avec DESeq2.
 
+
+Une condition correspond ici à la comparaison de l’expression génique entre deux groupes :
+
+* Condition 1v2 : comparaison entre le groupe 1 et le groupe 2,
+
+* Condition 1v3 : comparaison entre le groupe 1 et le groupe 3,
+
+* Condition 2v3 : comparaison entre le groupe 2 et le groupe 3.
+
 ```
 reference_group <- "Group1"
 DESeq.ds$group <- factor(DESeq.ds$group, levels = c(reference_group, setdiff(levels(DESeq.ds$group), reference_group)))
@@ -373,14 +382,6 @@ Ces observations sont cohérentes avec les analyses exploratoires (ACP et dendro
 ### Création des tableaux de résultats
 
 À présent, nous abordons la dernière étape de notre analyse, la génération des tableaux de résultats présentant les gènes différentiellement exprimés pour chaque condition de comparaison.
-
-Une condition correspond ici à la comparaison de l’expression génique entre deux groupes :
-
-* Condition 1v2 : comparaison entre le groupe 1 et le groupe 2,
-
-* Condition 1v3 : comparaison entre le groupe 1 et le groupe 3,
-
-* Condition 2v3 : comparaison entre le groupe 2 et le groupe 3.
 
 Le code ci-dessous présente le déroulé pour la comparaison entre le Groupe 1 et le Groupe 2, les mêmes étapes ont été réalisées pour les autres comparaisons.
 
