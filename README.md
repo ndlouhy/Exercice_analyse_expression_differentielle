@@ -68,7 +68,7 @@ Pour réaliser une analyse d’expression différentielle, deux types de fichier
 
 2. Un fichier de métadonnées (metadata) décrivant les informations expérimentales associées à chaque échantillon (conditions biologiques, groupes expérimentaux, etc.).
 
-Avec notre jeu de données, un fichier supplémentaire a pu être créer. Il s'agit d'un fichier d’annotation contenant les descriptions fonctionnelles des gènes, ce qui facilitera l’interprétation biologique des résultats.
+Avec le jeu de données, un fichier supplémentaire a pu être créer. Il s'agit d'un fichier d’annotation contenant les descriptions fonctionnelles des gènes, ce qui permettra l’interprétation biologique des résultats.
 
 ```
 ### -----------------------
@@ -126,7 +126,7 @@ Avant de procéder à l’analyse différentielle, il est essentiel de filtrer l
 Cette étape vise à retirer les gènes faiblement exprimés ou non exprimés, qui n’apportent pas d’information biologique utile.
 En supprimant ces gènes, on réduit le bruit dans les données et diminue la variance, ce qui améliore la puissance statistique des tests de DESeq2.
 
-La première étape consiste à retirer les gènes qui ne sont exprimés dans aucun échantillon (valeur de comptage nulle pour toutes les librairies).
+La première étape consiste à retirer les gènes qui sont exprimés dans aucun échantillon (valeur de comptage nulle pour toutes les librairies).
 Ces gènes ne contribuent pas à la variabilité observée et peuvent être exclus sans perte d’information.
 
 ```
@@ -225,7 +225,7 @@ L’objectif de cette approche exploratoire est d’évaluer si les échantillon
 La détection des outliers est primordiale car ils introduisent une variance non biologique, souvent liée à des effets techniques (effet de batch, qualité de séquençage, préparation d’échantillon, etc.).
 Les identifier à ce stade est donc essentiel pour éviter qu’ils ne biaisent l’analyse différentielle.
 
-Enfin, observer la structure globale des données est une étape importante. En effet, si les échantillons de groupes distincts ne se séparent pas sur les axes principaux, cela suggère une faible variance intergroupe, et qu'il n'existe pas de différence génique entre les groupes.
+Enfin, observer la structure globale des données est une étape importante. En effet, si les échantillons de groupes distincts ne se séparent pas sur les axes principaux, cela suggère qu'il n'y a pas de variance intergroupe et donc qu'il n'existe pas de différence génique entre les groupes.
 
 ```
 pcaData <- plotPCA(rld, intgroup = "group", returnData = TRUE)
@@ -255,9 +255,9 @@ Ces observations confirment la pertinence de la comparaison du groupe 1 contre l
 ### Dendrogramme 
 
 L’analyse du dendrogramme permet d’obtenir une vision hiérarchique de la structure topologique du jeu de données.
-Ce graphique illustre les similarités globales entre les échantillons en se basant sur leurs profils d’expression génique, et complète donc l’analyse réalisée par l’ACP.
+Ce graphique montre les similarités globales entre les échantillons en se basant sur leurs profils d’expression génique, et complète donc l’analyse réalisée par l’ACP.
 
-Dans un premier temps, j’ai calculé une matrice de corrélation entre tous les échantillons à partir des comptages normalisés.
+Dans un premier temps, une matrice de corrélation entre tous les échantillons à partir des comptages normalisés est calculée.
 Chaque valeur de corrélation mesure la similarité des profils d’expression entre deux échantillons. Deux échantillons ayant un profil d’expression similaire présentent une corrélation élevée, tandis que des échantillons très différents auront une corrélation faible.
 
 À partir de cette matrice de corrélation, on calcule ensuite une matrice de distance utilisée pour la classification hiérarchique.
@@ -322,13 +322,6 @@ L’analyse d’expression différentielle est réalisée à l’aide du package
 DESeq2 commence par normaliser les comptages afin de corriger les différences de profondeur de séquençage entre échantillons.
 Il modélise ensuite les données à l’aide d’un modèle statistique basé sur la loi binomiale négative, qui tient compte de la variance liée à chaque gène.
 
-Pour chaque comparaison (ou condition, comme 1v2, 1v3 ou 2v3), DESeq2 calcule :
-
-- log2FoldChange : le rapport d’expression entre les deux groupes,
-
-- valeur p (pvalue) testant la significativité de cette différence,
-
-- p-value ajustée (padj) selon la méthode de Benjamini–Hochberg (FDR) pour corriger le risque de faux positifs liés aux tests multiples.
 
 Une condition correspond ici à la comparaison de l’expression génique entre deux groupes :
 
@@ -337,6 +330,16 @@ Une condition correspond ici à la comparaison de l’expression génique entre 
 * Condition 1v3 : comparaison entre le groupe 1 et le groupe 3,
 
 * Condition 2v3 : comparaison entre le groupe 2 et le groupe 3.
+
+
+Pour chaque comparaison (ou condition, comme 1v2, 1v3 ou 2v3), DESeq2 calcule :
+
+- log2FoldChange : le rapport d’expression entre les deux groupes,
+
+- valeur p (pvalue) testant la significativité de cette différence,
+
+- p-value ajustée (padj) selon la méthode de Benjamini–Hochberg (FDR) pour corriger le risque de faux positifs liés aux tests multiples.
+
 
 ```
 reference_group <- "Group1"
@@ -617,28 +620,25 @@ Dans un premier temps, les analyses exploratoires et les MAplots, ont permis d�
 
 Ces tendances ont été confirmées par l’analyse différentielle de l’expression génique. Les conditions 1v2 et 1v3 présentent un nombre élevé et comparable de gènes différentiellement exprimés (7992 et 7423 gènes), tandis que la condition 2v3 ne révèle qu’un faible nombre de gènes différentiellement exprimés (157). Cette différence importante montre une forte différence transcriptionnelle entre le groupe 1 et les groupes 2/3, et une ressamblance transcriptionnelle importante entre ces deux derniers.
 
-L’analyse fonctionnelle des gènes les plus différentiellement exprimés a mis en évidence des profils biologiques distincts selon les comparaisons.
-En effet, entre le groupe 1 et les groupes 2/3, les gènes impliqués dans la réponse immunitaire et les processus inflammatoires (tels que Il7r, Trem2, Il1rn ou Lat2) sont majoritairement sous-exprimés dans le groupe 1 ou sur-exprimés dans les groupes 2 et 3 traduisant soit une inactivation de l'activité immunitaire du premier groupe soit une suractivation des réponses lié à l'immunité des deux autres groupes. 
+L’analyse fonctionnelle des gènes les plus différentiellement exprimés a mis en évidence des profils distincts selon les comparaisons.
+En effet, entre le groupe 1 et les groupes 2/3, les gènes impliqués dans la réponse immunitaire et les processus inflammatoires (tels que Il7r, Trem2, Il1rn ou Lat2) sont majoritairement sous-exprimés dans le groupe 1 ou sur-exprimés dans les groupes 2 et 3 traduisant soit d'une inactivation de l'activité immunitaire du premier groupe soit d'une suractivation des réponses lié à l'immunité des deux autres groupes. 
 
 En revanche, la comparaison 2v3 met principalement en évidence des gènes liés au métabolisme (tels que Scd1, Scd2, Elovl6, Lss ou Dhcr7), suggérant des ajustements métaboliques entre ces deux groupes plutôt que des différences majeures  immunitaire.
 
 Les heatmaps renforcent ces résultats. Celles des conditions 1v2 et 1v3 présentent des profils d’expression opposés entre les groupes, montrant la forte divergence transcriptionnelle du groupe 1. À l’inverse, la heatmap de la comparaison 2v3 montre une expression globalement homogène, avec quelques différences localisées, confirmant la proximité entre ces deux groupes.
-
-Dans l’ensemble, ces résultats suggèrent que le groupe 1 se distingue par une signature transcriptionnelle spécifique, marquée par une expression des gènes liés à l’immunité faible. Tandis que les groupes 2 et 3 partagent un profil transcriptionnel globalement similaire, mais présentent quelques différences métaboliques.
-
 
 
 
 ## Perspectives
 Plusieurs pistes d’approfondissement pourraient être envisagées pour compléter cette analyse d’expression différentielle.
 
-Tout d’abord, le choix d’exclure certains échantillons considérés comme « outliers » a permis d’obtenir des groupes plus homogènes et des résultats plus robustes. Cependant, cette approche peut aussi avoir été trop restrictive, entraînant la perte d’une partie de la variabilité biologique naturelle. Il serait donc intéressant, dans une analyse complémentaire, d'avoir une attitude moins extrème et de peut être accépter plus d'échantillons.
+Tout d’abord, le choix d’exclure certains échantillons considérés comme « outliers » a permis d’obtenir des groupes plus homogènes. Cependant, cette approche peut aussi avoir été trop restrictive, entraînant la perte d’une partie de la variabilité biologique naturelle. Il serait donc intéressant, dans une analyse complémentaire, d'avoir une attitude moins extrème et de peut être accépter plus d'échantillons.
 
 Ensuite, l’interprétation biologique s’est concentrée sur les 10 gènes les plus significativement différentiellement exprimés pour chaque condition. Bien que ces gènes soient informatifs, une analyse élargie à un plus grand nombre de gènes permettrait surement d'obtenir une vision plus global des réel différences entre les groupes. L’utilisation d’outils d’enrichissement fonctionnel, tels que GO ou KEGG, pourrait également permettre de mieux comprendre les processus moléculaires impliqués.
 
 Enfin, l’observation des heatmaps a mis en évidence plusieurs groupes de gènes co-régulés. Une analyse approfondie pourrait être fait pour en apprendre d'avantage sur ces co-régulations.
 
-Ces analyses complémentaires pourrait contribuer à mieux caractériser les mécanismes responsables des différences observées entre les groupes.
+Ces analyses complémentaires pourrait contribuer à mieux comprendre les différences observées entre les groupes.
 
 
 
